@@ -79,6 +79,70 @@
   margin: 0;
 }
 
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Light.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Light.woff) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-LightItalic.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-LightItalic.woff) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Regular.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Regular.woff) format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Italic.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Italic.woff) format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Medium.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Medium.woff) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-MediumItalic.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-MediumItalic.woff) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Bold.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-Bold.woff) format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Display';
+  src: url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-BoldItalic.woff2) format('woff2'),url(/assets/fonts/plus-jakarta-display/PlusJakartaSans-BoldItalic.woff) format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap
+}
+
 html,
 body {
   max-width: 100vw;
