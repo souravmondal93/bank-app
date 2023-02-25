@@ -9,7 +9,7 @@ import {
 import PropTypes from "prop-types";
 import React from "react";
 
-import { SidebarResponsive } from "../sidebar/sidebar";
+import { SidebarResponsive } from "@/components/sidebar/sidebar-responsive";
 import { AuthLinks } from './auth-links';
 import { Brand } from './brand';
 import routes from "../../routes";

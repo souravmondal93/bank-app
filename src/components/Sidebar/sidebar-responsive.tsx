@@ -1,4 +1,4 @@
-
+/*eslint-disable*/
 import { HamburgerIcon } from "@chakra-ui/icons";
 // chakra imports
 import {
@@ -23,28 +23,33 @@ import React from "react";
 import NextLink from "next/link";
 import { useRouter } from 'next/router'
 
-// FUNCTIONS
+type SidebarResponsiveProps = {
+  routes: any;
+  iconColor: string;
+  logoText: string;
+  secondary: string;
+  ms?: any;
+};
 
-function Sidebar(props) {
+export function SidebarResponsive(props: SidebarResponsiveProps) {
   // to check for active links and opened collapses
   let location = useRouter();
   // this is for the rest of the collapses
   const [state, setState] = React.useState({});
   const mainPanel = React.useRef();
-  let constiantChange = "0.2s linear";
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
   };
   // this function creates the links and collapses that appear in the sidebar (left menu)
   const createLinks = (routes) => {
-    const { sidebarconstiant } = props;
     // Chakra Color Mode
-    let activeBg = "#1A1F37";
-    let inactiveBg = "#1A1F37";
-    let activeColor = "white";
-    let inactiveColor = "white";
-    let sidebarActiveShadow = "none";
+    const activeBg = "#1A1F37";
+    const inactiveBg = "#1A1F37";
+    const activeColor = "white";
+    const inactiveColor = "white";
+
+    console.log('Routes SR: ', routes);
 
     return routes.map((prop, key) => {
       if (prop.redirect) {
@@ -80,10 +85,7 @@ function Sidebar(props) {
               boxSize='initial'
               justifyContent='flex-start'
               alignItems='center'
-              boxShadow={sidebarActiveShadow}
               bg={activeBg}
-              transition={constiantChange}
-              backdropFilter='blur(42px)'
               mb={{
                 xl: "12px",
               }}
@@ -104,7 +106,7 @@ function Sidebar(props) {
                 borderColor: "transparent",
               }}
               _focus={{
-                boxShadow: "0px 7px 11px rgba(0, 0, 0, 0.04)",
+                boxShadow: "none",
               }}>
               <Flex>
                 {typeof prop.icon === "string" ? (
@@ -115,8 +117,7 @@ function Sidebar(props) {
                     color='white'
                     h='30px'
                     w='30px'
-                    me='12px'
-                    transition={constiantChange}>
+                    me='12px'>
                     {prop.icon}
                   </IconBox>
                 )}
@@ -162,8 +163,7 @@ function Sidebar(props) {
                     color='brand.200'
                     h='30px'
                     w='30px'
-                    me='12px'
-                    transition={constiantChange}>
+                    me='12px'>
                     {prop.icon}
                   </IconBox>
                 )}
@@ -177,54 +177,72 @@ function Sidebar(props) {
       );
     });
   };
-
-
-  const { logoText, routes, sidebarconstiant } = props;
+  const { logoText, routes, iconColor, ...rest } = props;
 
   const links = <>{createLinks(routes)}</>;
 
   //  BRAND
   //  Chakra Color Mode
-  let sidebarBg =
-    "linear-gradient(111.84deg, rgba(6, 11, 38, 0.94) 59.3%, rgba(26, 31, 55, 0) 100%)";
-  let sidebarRadius = "16px";
-  let sidebarMargins = "16px 0px 16px 16px";
+  
 
   // SIDEBAR
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+  // Color constiables
   return (
-    <Box ref={mainPanel}>
-      <Box display={{ sm: "none", xl: "block" }} position='fixed'>
-        <Box
-          bg={sidebarBg}
+    <Flex
+      display={{ sm: "flex", xl: "none" }}
+      ref={mainPanel}
+      alignItems='center'>
+      <HamburgerIcon
+        color={iconColor}
+        w='18px'
+        h='18px'
+        ref={btnRef}
+        // colorScheme='teal'
+        onClick={onOpen}
+      />
+      <Drawer
+        isOpen={isOpen}
+        onClose={onClose}
+        placement="left"
+        finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <DrawerContent
           backdropFilter='blur(10px)'
-          transition={constiantChange}
-          w='260px'
-          maxW='260px'
+          bg='linear-gradient(111.84deg, rgba(6, 11, 38, 0.94) 59.3%, rgba(26, 31, 55, 0) 100%); '
+          w='250px'
+          maxW='250px'
           ms={{
             sm: "16px",
           }}
           my={{
             sm: "16px",
           }}
-          h='calc(100vh - 32px)'
-          ps='20px'
-          pe='20px'
-          m={sidebarMargins}
-          borderRadius={sidebarRadius}>
-          <Box><Brand logoText={logoText} /></Box>
-          <Stack direction='column' mb='40px'>
-            <Box>{links}</Box>
-          </Stack>
-        </Box>
-      </Box>
-    </Box>
+          borderRadius='16px'>
+          <DrawerCloseButton
+            color='white'
+            _focus={{ boxShadow: "none" }}
+            _hover={{ boxShadow: "none" }}
+          />
+          <DrawerBody maxW='250px' px='1rem'>
+            <Box maxW='100%' h='100vh'>
+              <Box><Brand logoText={logoText} /></Box>
+              <Stack direction='column' mb='40px'>
+                <Box>{links}</Box>
+              </Stack>
+              {/* <SidebarHelp></SidebarHelp> */}
+            </Box>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Flex>
   );
 }
 
-Sidebar.propTypes = {
+SidebarResponsive.propTypes = {
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  constiant: PropTypes.string,
 };
 
-export default Sidebar;
+export default SidebarResponsive;
