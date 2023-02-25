@@ -1,4 +1,5 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
+import { gql, useQuery } from '@apollo/client';
 
 // Chakra imports
 import { Box, Button, Flex, Grid, Icon, Spacer, Text } from "@chakra-ui/react";
@@ -10,37 +11,89 @@ const BackgroundCard1 = "assets/img/billing-background-card.png";
 import Card from "@/components/Card/Card.js";
 import CardBody from "@/components/Card/CardBody.js";
 import CardHeader from "@/components/Card/CardHeader.js";
-import GradientBorder from "@/components/GradientBorder/GradientBorder";
 import IconBox from "@/components/Icons/IconBox";
-import BillingRow from "@/components/Tables/BillingRow";
-import InvoicesRow from "@/components/Tables/InvoicesRow";
 import TransactionRow from "@/components/Tables/TransactionRow";
 
 // Icons
-import { FaPencilAlt, FaRegCalendarAlt } from "react-icons/fa";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoEllipsisHorizontalSharp } from "react-icons/io5";
 import { RiMastercardFill } from "react-icons/ri";
 import {
   BillIcon,
   GraphIcon,
-  MastercardIcon,
-  VisaIcon,
 } from "@/components/Icons/Icons";
 
 // Data
 import {
-  billingData,
-  invoicesData,
   newestTransactions,
   olderTransactions,
 } from "@/variables/general";
 import HomeLayout from '@/layouts/home';
+import { partition, formatAmount, formatDateTimeString } from '@/common/helper';
+import CONSTANTS from '@/common/constants';
+
+const SAVINGS_ACCOUNT_DATA = gql`
+  query Query {
+    CreditCarTransactionsByCurrentUser {
+      _id
+      type
+      payeeName
+      date
+      amount
+      status
+      reference
+      sourceAccountId
+      senderId
+      recipientId
+    }
+    getMyCreditCardAccount {
+      _id
+      type
+      isActive
+      owner
+      sortCode
+      accountNumber
+      currency
+      balance
+    }
+  }
+`;
 
 CreditCard.getLayout = function getLayout(page: ReactElement) {
   return <HomeLayout>{page}</HomeLayout>;
 };
 
 function CreditCard() {
+  const { data, loading, error } = useQuery(SAVINGS_ACCOUNT_DATA);
+  const [completedTransactions, setCompletedTransactions] = useState([]);
+  const [scheduledTransactions, setScheduledTransactions] = useState([]);
+  const [accountId, setAccountId] = useState('');
+  const [balance, setBalance] = useState(0);
+
+  const getTransactionType = (transaction: any, accountId: string): string => {
+    console.log('Transaction: ', transaction.sourceAccountId, accountId);
+    return  transaction.sourceAccountId === accountId ? CONSTANTS.CREDIT_TRANSACTION : CONSTANTS.DEBIT_TRANSACTION;
+  }
+
+  useEffect(() => {
+    if (data?.getMyCreditCardAccount?._id) {
+      setAccountId(data.getMyCreditCardAccount._id);
+    }
+
+    if (data?.getMyCreditCardAccount?.balance) {
+      setBalance(data.getMyCreditCardAccount.balance);
+    }
+
+    if (data?.CreditCarTransactionsByCurrentUser?.length) {
+      const [completed, scheduled] = partition(data.CreditCarTransactionsByCurrentUser, (transaction) => transaction.status === 'DONE');
+      setCompletedTransactions(completed);
+      setScheduledTransactions(scheduled);
+    }
+  }, [data]);
+
+  if (loading) return <h1>Loading ...</h1>;
+
+  if (error) return <h1>Something Went Wrong ...</h1>;
 
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }} mx='auto'>
@@ -71,7 +124,7 @@ function CreditCard() {
                     me='6px'
                   />
                   <Text color='gray.400' fontSize='sm'>
-                    23 - 30 March 2021
+                    Recent Transactions
                   </Text>
                 </Flex>
               </Flex>
@@ -82,26 +135,14 @@ function CreditCard() {
               <Text color='gray.400' fontSize='xs' mb='18px'>
                 NEWEST
               </Text>
-              {newestTransactions.map((row) => {
+              {completedTransactions.map((row: any) => {
                 return (
                   <TransactionRow
-                    name={row.name}
-                    logo={row.logo}
-                    date={row.date}
-                    price={row.price}
-                  />
-                );
-              })}
-              <Text color='gray.400' fontSize='xs' my='18px'>
-                OLDER
-              </Text>
-              {olderTransactions.map((row) => {
-                return (
-                  <TransactionRow
-                    name={row.name}
-                    logo={row.logo}
-                    date={row.date}
-                    price={row.price}
+                    name={row.payeeName}
+                    date={formatDateTimeString(row.date)}
+                    price={formatAmount(row.amount)}
+                    type={getTransactionType(row, accountId)}
+                    key={row._id}
                   />
                 );
               })}
@@ -123,47 +164,22 @@ function CreditCard() {
                   fontWeight='bold'>
                   Upcoming Transactions
                 </Text>
-                <Flex align='center'>
-                  <Icon
-                    as={FaRegCalendarAlt}
-                    color='gray.400'
-                    w='15px'
-                    h='15px'
-                    color='#fff'
-                    me='6px'
-                  />
-                  <Text color='gray.400' fontSize='sm'>
-                    23 - 30 March 2021
-                  </Text>
-                </Flex>
               </Flex>
             </Flex>
           </CardHeader>
           <CardBody>
             <Flex direction='column' w='100%'>
               <Text color='gray.400' fontSize='xs' mb='18px'>
-                NEWEST
+                UPCOMING
               </Text>
-              {newestTransactions.map((row) => {
+              {scheduledTransactions.map((row: any) => {
                 return (
                   <TransactionRow
-                    name={row.name}
-                    logo={row.logo}
-                    date={row.date}
-                    price={row.price}
-                  />
-                );
-              })}
-              <Text color='gray.400' fontSize='xs' my='18px'>
-                OLDER
-              </Text>
-              {olderTransactions.map((row) => {
-                return (
-                  <TransactionRow
-                    name={row.name}
-                    logo={row.logo}
-                    date={row.date}
-                    price={row.price}
+                    name={row.payeeName}
+                    date={formatDateTimeString(row.date)}
+                    price={formatAmount(row.amount)}
+                    type={getTransactionType(row, accountId)}
+                    key={row._id}
                   />
                 );
               })}
@@ -211,14 +227,14 @@ function CreditCard() {
                         fontSize={{ sm: "xl", lg: "lg", xl: "xl" }}
                         letterSpacing='2px'
                         fontWeight='bold'>
-                        7812 2139 0823 XXXX
+                        6243 7821 1246 XXXX
                       </Text>
                     </Box>
                     <Flex mt='14px'>
                       <Flex direction='column' me='34px'>
                         <Text fontSize='xs'>VALID THRU</Text>
                         <Text fontSize='xs' fontWeight='bold'>
-                          05/24
+                          12/28
                         </Text>
                       </Flex>
                       <Flex direction='column'>
@@ -246,7 +262,7 @@ function CreditCard() {
                       Credit Balance
                     </Text>
                     <Text color='#fff' fontWeight='bold' fontSize='34px'>
-                      $25,215
+                      £25,215
                     </Text>
                   </Flex>
                   <Flex direction='column'>
@@ -291,7 +307,7 @@ function CreditCard() {
                     </Flex>
                   </Flex>
                   <Text color='#fff' fontSize='sm' fontWeight='bold'>
-                    -$154.50
+                    -£154.50
                   </Text>
                 </Flex>
               </Flex>

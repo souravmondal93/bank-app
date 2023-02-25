@@ -20,7 +20,8 @@
       "@/components/*": ["./src/components/*"],
       "@/layouts/*": ["./src/layouts/*"],
       "@/assets/*": ["./src/assets/*"],
-      "@/variables/*": ["./src/variables/*"]
+      "@/variables/*": ["./src/variables/*"],
+      "@/common/*": ["./src/common/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/layouts/auth.tsx"],

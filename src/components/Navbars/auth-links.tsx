@@ -17,35 +17,7 @@ const navbarIcon = "white";
 
 export const AuthLinks = () => (
   <HStack display={{ sm: "none", lg: "flex" }}>
-    <NextLink href='/dashboard'>
-      <Button
-        fontSize='sm'
-        ms='0px'
-        me='0px'
-        px='0px'
-        // me={{ sm: "2px", md: "16px" }}
-        color={navbarIcon}
-        variant='transparent-with-icon'
-        leftIcon={<HomeIcon color={navbarIcon} w='12px' h='12px' me='0px' />}>
-        <Text>Dashboard</Text>
-      </Button>
-    </NextLink>
-    <NextLink href='/profile'>
-      <Button
-        fontSize='sm'
-        ms='0px'
-        me='0px'
-        px='0px'
-        // me={{ sm: "2px", md: "16px" }}
-        color={navbarIcon}
-        variant='transparent-with-icon'
-        leftIcon={
-          <PersonIcon color={navbarIcon} w='12px' h='12px' me='0px' />
-        }>
-        <Text>Profile</Text>
-      </Button>
-    </NextLink>
-    <NextLink href='/auth/signup'>
+    <NextLink href='/auth/register'>
       <Button
         fontSize='sm'
         ms='0px'
@@ -60,7 +32,7 @@ export const AuthLinks = () => (
         <Text>Sign Up</Text>
       </Button>
     </NextLink>
-    <NextLink href='/auth/signin'>
+    <NextLink href='/auth/login'>
       <Button
         fontSize='sm'
         ms='0px'

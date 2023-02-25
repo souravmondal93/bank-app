@@ -217,7 +217,6 @@ function Sidebar(props) {
           <Stack direction='column' mb='40px'>
             <Box>{links}</Box>
           </Stack>
-          <SidebarHelp></SidebarHelp>
         </Box>
       </Box>
     </Box>
@@ -243,6 +242,8 @@ export function SidebarResponsive(props) {
     const inactiveBg = "#1A1F37";
     const activeColor = "white";
     const inactiveColor = "white";
+
+    console.log('Routes SR: ', routes);
 
     return routes.map((prop, key) => {
       if (prop.redirect) {

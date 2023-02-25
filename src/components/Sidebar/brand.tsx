@@ -1,18 +1,5 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
-  Flex,
-  Link,
-  Stack,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { Separator } from "@/components/Separator/Separator";
+import { Box, Link, Text } from '@chakra-ui/react';
+import { Separator } from '@/components/Separator/Separator';
 
 const Brand = ({ logoText }: { logoText: string }) => (
   <Box pt={'35px'} mb='8px'>
@@ -27,7 +14,6 @@ const Brand = ({ logoText }: { logoText: string }) => (
       alignItems='center'
       fontSize='11px'
     >
-      {/* <SimmmpleLogoWhite w='22px' h='22px' me='10px' mt='2px' /> */}
       <Box
         bg='linear-gradient(97.89deg, #FFFFFF 70.67%, rgba(117, 122, 140, 0) 108.55%)'
         bgClip='text'
@@ -41,4 +27,4 @@ const Brand = ({ logoText }: { logoText: string }) => (
   </Box>
 );
 
-export default Brand
+export default Brand;

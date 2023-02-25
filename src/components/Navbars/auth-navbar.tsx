@@ -12,7 +12,7 @@ import React from "react";
 import { SidebarResponsive } from "../Sidebar/Sidebar";
 import { AuthLinks } from './auth-links';
 import { Brand } from './brand';
-// import routes from "../../routes.js";
+import routes from "../../routes.js";
 
 type AuthNavbarProps =  {
   logoText: string;
@@ -61,6 +61,7 @@ export default function AuthNavbar(props: AuthNavbarProps) {
           ms={{ base: "auto", lg: "0px" }}
           display={{ base: "flex", lg: "none" }}>
           <SidebarResponsive
+            routes={routes}
             iconColor='white'
             logoText={props.logoText}
             secondary={props.secondary}
@@ -68,7 +69,7 @@ export default function AuthNavbar(props: AuthNavbarProps) {
           />
         </Box>
         <AuthLinks />
-        <Link href='https://creative-tim.com/product/vision-ui-dashboard-chakra'>
+        <Link href=''>
           <Button
             fontSize='xs'
             variant='brand'

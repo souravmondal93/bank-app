@@ -1,8 +1,21 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
+import {
+  FaArrowDown,
+  FaArrowUp,
+} from "react-icons/fa";
 
-function TransactionRow(props) {
-  const { name, date, logo, price } = props;
+import CONSTANTS from '@/common/constants';
+
+type TransactionRowProps = {
+  name: string;
+  date: string;
+  price: string;
+  type: string;
+};
+
+function TransactionRow(props: TransactionRowProps) {
+  const { name, date, price, type } = props;
 
   return (
     <Flex mb='24px' justifyContent='space-between'>
@@ -11,9 +24,9 @@ function TransactionRow(props) {
           me='14px'
           borderRadius='50%'
           color={
-            price[0] === "+"
+            type === CONSTANTS.DEBIT_TRANSACTION
               ? "#01B574"
-              : price[0] === "-"
+              : type === CONSTANTS.CREDIT_TRANSACTION
               ? "red.500"
               : "gray.400"
           }
@@ -23,11 +36,11 @@ function TransactionRow(props) {
           justifyContent='center'
           w='35px'
           h='35px'>
-          <Icon as={logo} w='12px' h='12px' />
+          <Icon as={type === CONSTANTS.DEBIT_TRANSACTION ? FaArrowUp : FaArrowDown} w='12px' h='12px' />
         </Box>
         <Flex direction='column'>
           <Text fontSize='sm' color='#fff' mb='4px'>
-            {name}
+          {name}
           </Text>
           <Text fontSize={{ sm: "xs", md: "sm" }} color='gray.400'>
             {date}
@@ -36,13 +49,19 @@ function TransactionRow(props) {
       </Flex>
       <Box
         color={
-          price[0] === "+"
+          type === CONSTANTS.DEBIT_TRANSACTION
             ? "#01B574"
-            : price[0] === "-"
+            : type === CONSTANTS.CREDIT_TRANSACTION
             ? "red.500"
             : "gray.400"
         }>
-        <Text fontSize='sm'>{price}</Text>
+        <Text fontSize='sm'>{
+            type === CONSTANTS.DEBIT_TRANSACTION
+              ? "+"
+              : type === CONSTANTS.CREDIT_TRANSACTION
+              ? "-"
+              : ""
+          } £{price}</Text>
       </Box>
     </Flex>
   );
