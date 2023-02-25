@@ -3,7 +3,16 @@ import dynamic from 'next/dynamic'
     
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-class LineChart extends React.Component {
+type LineChartProps = {
+  lineChartData: any;
+  lineChartOptions: any
+};
+type LineChartState = {
+  chartData: any;
+  chartOptions: any;
+};
+
+class LineChart extends React.Component<LineChartProps, LineChartState> {
   constructor(props) {
     super(props);
 

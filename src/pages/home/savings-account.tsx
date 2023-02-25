@@ -1,27 +1,24 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 // Chakra imports
-import { Box, Button, Flex, Grid, Icon, Spacer, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Icon, Spacer, Text } from '@chakra-ui/react';
 
 // Images
-const BackgroundCard1 = "assets/img/billing-background-card.png";
+const BackgroundCard1 = 'assets/img/billing-background-card.png';
 
 // Custom components
-import Card from "@/components/Card/Card.js";
-import CardBody from "@/components/Card/CardBody.js";
-import CardHeader from "@/components/Card/CardHeader.js";
-import IconBox from "@/components/Icons/IconBox";
-import TransactionRow from "@/components/Tables/TransactionRow";
+import Card from '@/components/card/card';
+import CardBody from '@/components/card/card-body';
+import CardHeader from '@/components/card/card-header';
+import IconBox from '@/components/icons/icon-box';
+import TransactionRow from '@/components/tables/TransactionRow';
 
 // Icons
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { IoEllipsisHorizontalSharp } from "react-icons/io5";
-import { RiMastercardFill } from "react-icons/ri";
-import {
-  BillIcon,
-  GraphIcon,
-} from "@/components/Icons/Icons";
+import { FaRegCalendarAlt } from 'react-icons/fa';
+import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
+import { RiMastercardFill } from 'react-icons/ri';
+import { BillIcon, GraphIcon } from '@/components/icons/all-icons';
 
 // Data
 import HomeLayout from '@/layouts/home';
@@ -67,8 +64,10 @@ function SavingsAccount() {
   const [balance, setBalance] = useState(0);
 
   const getTransactionType = (transaction: any, accountId: string): string => {
-    return  transaction.sourceAccountId === accountId ? CONSTANTS.CREDIT_TRANSACTION : CONSTANTS.DEBIT_TRANSACTION;
-  }
+    return transaction.sourceAccountId === accountId
+      ? CONSTANTS.CREDIT_TRANSACTION
+      : CONSTANTS.DEBIT_TRANSACTION;
+  };
 
   useEffect(() => {
     if (data?.getMyAccount?._id) {
@@ -80,7 +79,10 @@ function SavingsAccount() {
     }
 
     if (data?.transactionsByCurrentUser?.length) {
-      const [completed, scheduled] = partition(data.transactionsByCurrentUser, (transaction) => transaction.status === 'DONE');
+      const [completed, scheduled] = partition(
+        data.transactionsByCurrentUser,
+        (transaction) => transaction.status === 'DONE'
+      );
       setCompletedTransactions(completed);
       setScheduledTransactions(scheduled);
     }
@@ -91,119 +93,126 @@ function SavingsAccount() {
   if (error) return <h1>Something Went Wrong ...</h1>;
 
   return (
-    <Flex direction='column' pt={{ base: "120px", md: "75px" }} mx='auto'>
-      <Grid templateColumns={{ sm: "1fr", lg: "60% 38%" }}>
+    <Flex direction='column' pt={{ base: '120px', md: '75px' }} mx='auto'>
+      <Grid templateColumns={{ sm: '1fr', lg: '60% 38%' }} gap='18px'>
         <Box>
-        <Card>
-          <CardHeader mb='12px'>
-            <Flex direction='column' w='100%'>
-              <Flex
-                direction={{ sm: "column", lg: "row" }}
-                justify={{ sm: "center", lg: "space-between" }}
-                align={{ sm: "center" }}
-                w='100%'
-                my={{ md: "12px" }}>
-                <Text
-                  color='#fff'
-                  fontSize={{ sm: "lg", md: "xl", lg: "lg" }}
-                  fontWeight='bold'>
-                  Your Transactions
+          <Card mb={{ sm: '24px' }}>
+            <CardHeader mb='12px'>
+              <Flex direction='column' w='100%'>
+                <Flex
+                  direction={{ sm: 'column', lg: 'row' }}
+                  justify={{ sm: 'center', lg: 'space-between' }}
+                  align={{ sm: 'center' }}
+                  w='100%'
+                  my={{ md: '12px' }}
+                >
+                  <Text
+                    color='#fff'
+                    fontSize={{ sm: 'lg', md: 'xl', lg: 'lg' }}
+                    fontWeight='bold'
+                  >
+                    Your Transactions
+                  </Text>
+                  <Flex align='center'>
+                    <Icon
+                      as={FaRegCalendarAlt}
+                      color='gray.400'
+                      w='15px'
+                      h='15px'
+                      // color='#fff'
+                      me='6px'
+                    />
+                    <Text color='gray.400' fontSize='sm'>
+                      Recent Transactions
+                    </Text>
+                  </Flex>
+                </Flex>
+              </Flex>
+            </CardHeader>
+            <CardBody>
+              <Flex direction='column' w='100%'>
+                <Text color='gray.400' fontSize='xs' mb='18px'>
+                  NEWEST
                 </Text>
-                <Flex align='center'>
-                  <Icon
-                    as={FaRegCalendarAlt}
-                    color='gray.400'
-                    w='15px'
-                    h='15px'
-                    // color='#fff'
-                    me='6px'
-                  />
-                  <Text color='gray.400' fontSize='sm'>
-                    Recent Transactions
+                {completedTransactions.map((row: any) => {
+                  return (
+                    <TransactionRow
+                      name={row.payeeName}
+                      date={formatDateTimeString(row.date)}
+                      price={formatAmount(row.amount)}
+                      type={getTransactionType(row, accountId)}
+                      key={row._id}
+                    />
+                  );
+                })}
+              </Flex>
+            </CardBody>
+          </Card>
+          <Card my={{ lg: '24px' }}>
+            <CardHeader mb='12px'>
+              <Flex direction='column' w='100%'>
+                <Flex
+                  direction={{ sm: 'column', lg: 'row' }}
+                  justify={{ sm: 'center', lg: 'space-between' }}
+                  align={{ sm: 'center' }}
+                  w='100%'
+                  my={{ md: '12px' }}
+                >
+                  <Text
+                    color='#fff'
+                    fontSize={{ sm: 'lg', md: 'xl', lg: 'lg' }}
+                    fontWeight='bold'
+                  >
+                    Upcoming Transactions
                   </Text>
                 </Flex>
               </Flex>
-            </Flex>
-          </CardHeader>
-          <CardBody>
-            <Flex direction='column' w='100%'>
-              <Text color='gray.400' fontSize='xs' mb='18px'>
-                NEWEST
-              </Text>
-              {completedTransactions.map((row: any) => {
-                return (
-                  <TransactionRow
-                    name={row.payeeName}
-                    date={formatDateTimeString(row.date)}
-                    price={formatAmount(row.amount)}
-                    type={getTransactionType(row, accountId)}
-                    key={row._id}
-                  />
-                );
-              })}
-            </Flex>
-          </CardBody>
-        </Card>
-        <Card my={{ lg: "24px" }}>
-          <CardHeader mb='12px'>
-            <Flex direction='column' w='100%'>
-              <Flex
-                direction={{ sm: "column", lg: "row" }}
-                justify={{ sm: "center", lg: "space-between" }}
-                align={{ sm: "center" }}
-                w='100%'
-                my={{ md: "12px" }}>
-                <Text
-                  color='#fff'
-                  fontSize={{ sm: "lg", md: "xl", lg: "lg" }}
-                  fontWeight='bold'>
-                  Upcoming Transactions
+            </CardHeader>
+            <CardBody>
+              <Flex direction='column' w='100%'>
+                <Text color='gray.400' fontSize='xs' mb='18px'>
+                  UPCOMING
                 </Text>
+                {scheduledTransactions.map((row: any) => {
+                  return (
+                    <TransactionRow
+                      name={row.payeeName}
+                      date={formatDateTimeString(row.date)}
+                      price={formatAmount(row.amount)}
+                      type={getTransactionType(row, accountId)}
+                      key={row._id}
+                    />
+                  );
+                })}
               </Flex>
-            </Flex>
-          </CardHeader>
-          <CardBody>
-            <Flex direction='column' w='100%'>
-              <Text color='gray.400' fontSize='xs' mb='18px'>
-                UPCOMING
-              </Text>
-              {scheduledTransactions.map((row: any) => {
-                return (
-                  <TransactionRow
-                    name={row.payeeName}
-                    date={formatDateTimeString(row.date)}
-                    price={formatAmount(row.amount)}
-                    type={getTransactionType(row, accountId)}
-                    key={row._id}
-                  />
-                );
-              })}
-            </Flex>
-          </CardBody>
-        </Card>
+            </CardBody>
+          </Card>
         </Box>
-        
-        <Box  ms={{ lg: "24px" }}>
+
+        <Box>
           <Grid
             templateColumns={{
-              sm: "1fr",
-              md: "1fr",
+              sm: '1fr',
+              md: '1fr',
             }}
-            gap='26px'>
-              {/* Mastercard */}
+            gap='26px'
+          >
+            {/* Mastercard */}
             <Card
               // backgroundImage={BackgroundCard1}
               backgroundRepeat='no-repeat'
               bgSize='cover'
               bgPosition='10%'
-              p='16px'>
+              p='16px'
+            >
               <CardBody h='100%' w='100%'>
                 <Flex
-                  direction="column"
+                  direction='column'
                   color='white'
                   h='100%'
                   p='0px 10px 20px 10px'
-                  w='100%'>
+                  w='100%'
+                >
                   <Flex justify='space-between' align='center'>
                     <Text fontSize='md' fontWeight='bold'>
                       Vision Bank
@@ -219,9 +228,10 @@ function SavingsAccount() {
                   <Flex direction='column'>
                     <Box>
                       <Text
-                        fontSize={{ sm: "xl", lg: "lg", xl: "xl" }}
+                        fontSize={{ sm: 'xl', lg: 'lg', xl: 'xl' }}
                         letterSpacing='2px'
-                        fontWeight='bold'>
+                        fontWeight='bold'
+                      >
                         7812 2139 0823 XXXX
                       </Text>
                     </Box>
@@ -245,13 +255,14 @@ function SavingsAccount() {
             </Card>
             {/* Credit Balance */}
             <Card>
-              <Flex direction="column">
+              <Flex direction='column'>
                 <Flex
                   justify='space-between'
                   p='22px'
                   mb='18px'
                   bg='linear-gradient(127.09deg, rgba(34, 41, 78, 0.94) 19.41%, rgba(10, 14, 35, 0.49) 76.65%)'
-                  borderRadius='18px'>
+                  borderRadius='18px'
+                >
                   <Flex direction='column'>
                     <Text color='#E9EDF7' fontSize='12px'>
                       Account Balance
@@ -266,7 +277,8 @@ function SavingsAccount() {
                       // _hover='none'
                       // _active='none'
                       alignSelf='flex-end'
-                      p='0px'>
+                      p='0px'
+                    >
                       <Icon
                         as={IoEllipsisHorizontalSharp}
                         color='#fff'
@@ -289,7 +301,8 @@ function SavingsAccount() {
                       borderRadius='30px'
                       w='42px'
                       h='42px'
-                      me='10px'>
+                      me='10px'
+                    >
                       <BillIcon w='22px' h='22px' />
                     </IconBox>
                     <Flex direction='column'>

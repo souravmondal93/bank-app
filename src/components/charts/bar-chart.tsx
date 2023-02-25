@@ -3,7 +3,16 @@ import dynamic from 'next/dynamic'
     
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-class BarChart extends Component {
+type BarChartProps = {
+  barChartData: any;
+  barChartOptions: any
+};
+type BarChartState = {
+  chartData: any;
+  chartOptions: any;
+};
+
+class BarChart extends Component<BarChartProps, BarChartState> {
   constructor(props) {
     super(props);
     this.state = {

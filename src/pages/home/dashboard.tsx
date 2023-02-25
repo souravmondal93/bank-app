@@ -20,12 +20,12 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 
 // Custom components
-import Card from '@/components/Card/Card.js';
-import CardBody from '@/components/Card/CardBody.js';
-import CardHeader from '@/components/Card/CardHeader.js';
-import BarChart from '@/components/Charts/BarChart';
-import LineChart from '@/components/Charts/LineChart';
-import IconBox from '@/components/Icons/IconBox';
+import Card from '@/components/card/card';
+import CardBody from '@/components/card/card-body';
+import CardHeader from '@/components/card/card-header';
+import BarChart from '@/components/charts/bar-chart';
+import LineChart from '@/components/charts/line-chart';
+import IconBox from '@/components/icons/icon-box';
 // Icons
 import {
   CartIcon,
@@ -34,7 +34,7 @@ import {
   RocketIcon,
   StatsIcon,
   WalletIcon,
-} from '@/components/Icons/Icons.js';
+} from '@/components/icons/all-icons';
 // Data
 import {
   barChartOptionsDashboard,

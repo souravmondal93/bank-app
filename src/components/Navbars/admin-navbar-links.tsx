@@ -14,12 +14,12 @@ import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import NextLink from 'next/link';
-import routes from '../../routes.js';
+import routes from '../../routes';
 
 // Custom Icons
-import { ProfileIcon } from '@/components/Icons/Icons';
+import { ProfileIcon } from '@/components/icons/all-icons';
 // Custom Components
-import { SidebarResponsive } from '@/components/Sidebar/Sidebar';
+import { SidebarResponsive } from '@/components/sidebar/sidebar';
 import { httpLink, setAuthToken } from '../../../apollo-client';
 
 const LOGIN_USER = gql`
@@ -30,8 +30,15 @@ const LOGIN_USER = gql`
   }
 `;
 
+type AdminNavbarLinksProps = {
+   variant?: string;
+   secondary: string;
+   onOpen?: any;
+   logoText?: string;
+   fixed?: string;
+}
 
-export default function HomeNavbarLinks(props) {
+export default function AdminNavbarLinks(props: AdminNavbarLinksProps) {
   const router = useRouter();
   const { variant, secondary, ...rest } = props;
 
@@ -98,7 +105,7 @@ export default function HomeNavbarLinks(props) {
   );
 }
 
-HomeNavbarLinks.propTypes = {
+AdminNavbarLinks.propTypes = {
   variant: PropTypes.string,
   secondary: PropTypes.bool,
 };

@@ -1,20 +1,20 @@
 // Chakra imports
 import { ChakraProvider, Portal, useDisclosure } from '@chakra-ui/react';
 // import Configurator from "components/Configurator/Configurator";
-import Footer from '@/components/Footer/footer';
+import Footer from '@/components/footer/footer';
 // Layout components
-import AdminNavbar from '@/components/Navbars/AdminNavbar.js';
+import AdminNavbar from '@/components/navbars/admin-navbar';
 import React, { useState } from 'react';
 // import { Redirect, Route, Switch } from "react-router-dom";
-import routes from '../routes.js';
+import routes from '../routes';
 // Custom Chakra theme
-import theme from '../theme/themeAdmin.js';
+import theme from '../theme/theme-admin';
 // import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
 // Custom components
-import MainPanel from '@/components/Layout/MainPanel';
-import PanelContainer from '@/components/Layout/PanelContainer';
-import PanelContent from '@/components/Layout/PanelContent';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import MainPanel from '@/components/layout/main-panel';
+import PanelContainer from '@/components/layout/panel-container';
+import PanelContent from '@/components/layout/panel-content';
+import Sidebar from '@/components/sidebar/sidebar';
 import { useRouter } from 'next/router';
 
 export default function HomeLayout(props) {
@@ -74,33 +74,11 @@ export default function HomeLayout(props) {
     }
     return activeNavbar;
   };
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return getRoutes(prop.views);
-      }
-      if (prop.category === 'account') {
-        return getRoutes(prop.views);
-      }
-      if (prop.layout === '/admin') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // document.documentElement.dir = "ltr";
-  // Chakra Color Mode
 
   return (
-    <ChakraProvider theme={theme} resetCss={false}>
+    <ChakraProvider theme={theme} resetCSS={false}>
       <Sidebar
         routes={routes}
         logoText={'VISION BANK'}

@@ -33,7 +33,7 @@ const LOGIN_USER = gql`
 import AuthLayout from '../../layouts/auth';
 
 // Custom Components
-import GradientBorder from '../../components/GradientBorder/GradientBorder';
+import GradientBorder from '../../components/gradient-border/gradient-border';
 
 Login.getLayout = function getLayout(page: ReactElement) {
   return <AuthLayout>{page}</AuthLayout>;

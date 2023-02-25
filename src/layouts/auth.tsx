@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, ChakraProvider, Portal, Flex, Text } from '@chakra-ui/react';
 
-import AuthNavbar from '../components/Navbars/auth-navbar';
-import AuthFooter from '../components/Footer/auth-footer';
-import theme from '../theme/themeAuth';
+import AuthNavbar from '../components/navbars/auth-navbar';
+import AuthFooter from '../components/footer/auth-footer';
+import theme from '../theme/theme-auth';
 
 export default function AuthLayout(props: { children: React.ReactNode }) {
   const { children } = props;

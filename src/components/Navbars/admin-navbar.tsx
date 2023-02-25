@@ -6,7 +6,6 @@ import {
   BreadcrumbLink,
   Flex,
   Link,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
@@ -62,7 +61,7 @@ export default function AdminNavbar(props) {
   window.addEventListener("scroll", changeNavbar);
   return (
     <Flex
-      position={navbarPosition}
+      position="absolute"
       boxShadow={navbarShadow}
       bg={navbarBg}
       borderColor={navbarBorder}

@@ -11,7 +11,7 @@ import {
   HomeIcon,
   PersonIcon,
   RocketIcon,
-} from "../../components/Icons/Icons";
+} from "@/components/icons/all-icons";
 
 const navbarIcon = "white";
 

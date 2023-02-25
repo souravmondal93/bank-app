@@ -16,8 +16,8 @@ import {
   useDisclosure,
   Icon
 } from "@chakra-ui/react";
-import IconBox from "../Icons/IconBox";
-import Brand from "@/components/Sidebar/brand";
+import IconBox from "../icons/icon-box";
+import Brand from "@/components/sidebar/brand";
 import PropTypes from "prop-types";
 import React from "react";
 import NextLink from "next/link";
@@ -228,6 +228,7 @@ type SidebarProps = {
   iconColor: string;
   logoText: string;
   secondary: string;
+  ms?: any;
 };
 
 export function SidebarResponsive(props: SidebarProps) {

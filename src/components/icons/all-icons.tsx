@@ -499,7 +499,7 @@ export const WalletIcon = createIcon({
 export const VisaIcon = createIcon({
   displayName: "VisaIcon",
   viewBox: "0 0 25 9",
-  color: "#fff",
+  // color: "#fff",
   path: (
     <svg
       width='25'

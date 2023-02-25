@@ -13,7 +13,7 @@ import {
 import { gql, useQuery } from '@apollo/client';
 
 // Custom components
-import Card from '@/components/Card/Card.js';
+import Card from '@/components/card/card';
 import Modal from '@/components/modal/modal';
 import HomeLayout from '@/layouts/home';
 
@@ -80,9 +80,9 @@ export default function ApplyCard() {
 	return (
 		<>
 		<Flex flexDirection='column' pt={{ base: '120px', md: '75px' }}>
-			<Grid templateColumns={{ sm: '1fr', md: '1fr 1fr', '2xl': '2fr 1.2fr 1.5fr' }} my='26px' gap='18px'>
+			<Grid templateColumns={{ sm: "1fr", lg: "50% 50%" }} my='26px' gap='18px'>
 				{/* Satisfaction Rate */}
-				<Card gridArea={{ md: '2 / 1 / 3 / 2', '2xl': 'auto' }} variant="light">
+				<Card variant="light">
 					<Flex direction='column' position="relative" >
 						<Flex justify='space-between' align='center' mb='40px'>
 							<Text color='#fff' fontSize='lg' fontWeight='bold'>
@@ -172,18 +172,14 @@ export default function ApplyCard() {
 								bottom="0"
 								right="0"
 								px='30px'
-								onClick={() => applyCard(CARD_TYPE_GOLD)}
-								display={{
-									sm: "none",
-									lg: "flex",
-								}}>
+								onClick={() => applyCard(CARD_TYPE_GOLD)}>
 								Apply
 							</Button>
 						</Flex>
 					</Flex>
 				</Card>
 				{/* Referral Tracking */}
-				<Card gridArea={{ md: '2 / 2 / 3 / 3', '2xl': 'auto' }}>
+				<Card>
 					<Flex direction='column' position="relative">
 						<Flex justify='space-between' align='center' mb='40px'>
 							<Text color='#fff' fontSize='lg' fontWeight='bold'>
@@ -273,11 +269,7 @@ export default function ApplyCard() {
 								bottom="0"
 								right="0"
 								px='30px'
-								onClick={() => applyCard(CARD_TYPE_PLATINUM)}
-								display={{
-									sm: "none",
-									lg: "flex",
-								}}>
+								onClick={() => applyCard(CARD_TYPE_PLATINUM)}>
 								Apply
 							</Button>
 						</Flex>
