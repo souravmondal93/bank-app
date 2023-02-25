@@ -12,7 +12,7 @@ import Card from '@/components/card/card';
 import CardBody from '@/components/card/card-body';
 import CardHeader from '@/components/card/card-header';
 import IconBox from '@/components/icons/icon-box';
-import TransactionRow from '@/components/tables/TransactionRow';
+import TransactionRow from '@/components/tables/transaction-row';
 
 // Icons
 import { FaRegCalendarAlt } from 'react-icons/fa';
