@@ -19,7 +19,7 @@ import routes from '../../routes';
 // Custom Icons
 import { ProfileIcon } from '@/components/icons/all-icons';
 // Custom Components
-import { SidebarResponsive } from '@/components/sidebar/sidebar-responsive';
+import { SidebarResponsive } from '../../components/sidebar/sidebar-responsive';
 import { httpLink, setAuthToken } from '../../../apollo-client';
 
 const LOGIN_USER = gql`
