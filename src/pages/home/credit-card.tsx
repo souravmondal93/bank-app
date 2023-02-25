@@ -25,7 +25,7 @@ import HomeLayout from '@/layouts/home';
 import { partition, formatAmount, formatDateTimeString } from '@/common/helper';
 import CONSTANTS from '@/common/constants';
 
-const SAVINGS_ACCOUNT_DATA = gql`
+export const CREDIT_CARD_DATA = gql`
   query Query {
     CreditCarTransactionsByCurrentUser {
       _id
@@ -57,14 +57,13 @@ CreditCard.getLayout = function getLayout(page: ReactElement) {
 };
 
 function CreditCard() {
-  const { data, loading, error } = useQuery(SAVINGS_ACCOUNT_DATA);
+  const { data, loading, error } = useQuery(CREDIT_CARD_DATA);
   const [completedTransactions, setCompletedTransactions] = useState([]);
   const [scheduledTransactions, setScheduledTransactions] = useState([]);
   const [accountId, setAccountId] = useState('');
   const [balance, setBalance] = useState(0);
 
   const getTransactionType = (transaction: any, accountId: string): string => {
-    console.log('Transaction: ', transaction.sourceAccountId, accountId);
     return transaction.sourceAccountId === accountId
       ? CONSTANTS.CREDIT_TRANSACTION
       : CONSTANTS.DEBIT_TRANSACTION;
@@ -269,7 +268,7 @@ function CreditCard() {
                       Credit Balance
                     </Text>
                     <Text color='#fff' fontWeight='bold' fontSize='34px'>
-                      £25,215
+                      £{balance}
                     </Text>
                   </Flex>
                   <Flex direction='column'>

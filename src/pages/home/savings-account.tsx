@@ -25,7 +25,7 @@ import HomeLayout from '@/layouts/home';
 import { partition, formatAmount, formatDateTimeString } from '@/common/helper';
 import CONSTANTS from '@/common/constants';
 
-const SAVINGS_ACCOUNT_DATA = gql`
+export const SAVINGS_ACCOUNT_DATA = gql`
   query Query {
     transactionsByCurrentUser {
       _id

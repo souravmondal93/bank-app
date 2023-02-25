@@ -44,7 +44,7 @@ import {
 import HomeLayout from '@/layouts/home';
 import Modal from '@/components/modal/modal';
 
-const DASHBOARD_DATA = gql`
+export const DASHBOARD_DATA = gql`
   query Query {
     getMyAccount {
       balance

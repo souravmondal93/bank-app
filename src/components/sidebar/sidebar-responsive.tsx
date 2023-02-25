@@ -49,8 +49,6 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
     const activeColor = "white";
     const inactiveColor = "white";
 
-    console.log('Routes SR: ', routes);
-
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;

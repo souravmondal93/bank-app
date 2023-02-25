@@ -21,7 +21,7 @@ import NextLink from 'next/link';
 
 import { httpLink, setAuthToken } from '../../../apollo-client';
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   mutation Mutation($loginUserInput: LoginUserInput!) {
     loginUser(loginUserInput: $loginUserInput) {
       access_token
@@ -72,9 +72,9 @@ function Login() {
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log('Login Errors: ', errors);
-  }, [errors])
+  if (loading) return <h1>Loading ...</h1>;
+
+  if (error) return <h1>Something Went Wrong ...</h1>;
 
   return (
     <Flex
@@ -212,6 +212,7 @@ function Login() {
             mt='20px'
             isLoading={loading}
             loadingText='Signing In ...'
+            data-testid="sign-in-submit"
           >
             SIGN IN
           </Button>

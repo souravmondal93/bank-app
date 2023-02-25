@@ -29,7 +29,7 @@ Register.getLayout = function getLayout(page: ReactElement) {
   return <AuthLayout>{page}</AuthLayout>;
 };
 
-const REGISTER_USER = gql`
+export const REGISTER_USER = gql`
   mutation Mutation($createUserInput: CreateUserInput!) {
     createUser(createUserInput: $createUserInput) {
       _id
@@ -134,6 +134,10 @@ function Register() {
     console.log('Registration Errors: ', errors);
   }, [errors]);
 
+  if (loading) return <h1>Loading ...</h1>;
+
+  if (error) return <h1>Something Went Wrong ...</h1>;
+
   return (
     <>
       <Flex
@@ -230,6 +234,7 @@ function Register() {
                           type='text'
                           placeholder='First name'
                           {...field}
+                          data-testid="first-name-input"
                         />
                       </GradientBorder>
                       {errors.firstName && (
@@ -275,6 +280,7 @@ function Register() {
                           type='text'
                           placeholder='Last name'
                           {...field}
+                          data-testid="last-name-input"
                         />
                       </GradientBorder>
                       {errors.lastName && (
@@ -319,6 +325,7 @@ function Register() {
                           type='email'
                           placeholder='Your email address'
                           {...field}
+                          data-testid="email-input"
                         />
                       </GradientBorder>
                       {errors.email && (
@@ -363,6 +370,7 @@ function Register() {
                           type='text'
                           placeholder='Residential Address'
                           {...field}
+                          data-testid="address-input"
                         />
                       </GradientBorder>
                       {errors.address && (
@@ -407,6 +415,7 @@ function Register() {
                           type='tel'
                           placeholder='Contact Number'
                           {...field}
+                          data-testid="contact-number-input"
                         />
                       </GradientBorder>
                       {errors.phone && (
@@ -451,6 +460,7 @@ function Register() {
                           type='text'
                           placeholder='Occupation'
                           {...field}
+                          data-testid="occupation-input"
                         />
                       </GradientBorder>
                       {errors.occupation && (
@@ -495,6 +505,7 @@ function Register() {
                           type='number'
                           placeholder='Yearly Income'
                           {...field}
+                          data-testid="income-input"
                         />
                       </GradientBorder>
                       {errors.income && (
@@ -539,6 +550,7 @@ function Register() {
                           type='text'
                           placeholder='PAN'
                           {...field}
+                          data-testid="pan-input"
                         />
                       </GradientBorder>
                       {errors.pan && (
@@ -583,6 +595,7 @@ function Register() {
                           type='password'
                           placeholder='Your password'
                           {...field}
+                          data-testid="password-input"
                         />
                       </GradientBorder>
                       {errors.password && (
@@ -629,6 +642,7 @@ function Register() {
                           type='password'
                           placeholder='Confirm your password'
                           {...field}
+                          data-testid="confirm-password-input"
                         />
                       </GradientBorder>
                       {errors.confirmPassword && (
@@ -667,6 +681,7 @@ function Register() {
                     h='45'
                     mb='20px'
                     mt='20px'
+                    data-testid="register-button"
                   >
                     REGISTER
                   </Button>

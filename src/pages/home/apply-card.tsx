@@ -21,7 +21,7 @@ ApplyCard.getLayout = function getLayout(page: ReactElement) {
   return <HomeLayout>{page}</HomeLayout>;
 };
 
-const DASHBOARD_DATA = gql`
+export const DASHBOARD_DATA = gql`
   query Query {
     whoAmI {
       firstName
@@ -76,6 +76,10 @@ export default function ApplyCard() {
 		}
 		onOpen();
 	}
+
+  if (loading) return <h1>Loading ...</h1>;
+
+  if (error) return <h1>Something Went Wrong ...</h1>;
 
 	return (
 		<>
@@ -172,6 +176,7 @@ export default function ApplyCard() {
 								bottom="0"
 								right="0"
 								px='30px'
+								data-testid="gold-card-btn"
 								onClick={() => applyCard(CARD_TYPE_GOLD)}>
 								Apply
 							</Button>
@@ -269,6 +274,7 @@ export default function ApplyCard() {
 								bottom="0"
 								right="0"
 								px='30px'
+								data-testid="platinum-card-btn"
 								onClick={() => applyCard(CARD_TYPE_PLATINUM)}>
 								Apply
 							</Button>
