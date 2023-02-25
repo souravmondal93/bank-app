@@ -17,7 +17,7 @@ export default function AuthLayout(props: { children: React.ReactNode }) {
           <AuthNavbar logoText='VISION BANK' />
         </Portal>
         <Box w='100%'>
-          <Box ref={wrapper} w='100%'>
+          <Box w='100%'>
             <Flex position='relative'>
               <Flex
                 minH='100vh'

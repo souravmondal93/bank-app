@@ -83,7 +83,7 @@ export default function HomeNavbarLinks(props) {
         {...rest}
       />
       <Menu>
-        <MenuButton align='center'>
+        <MenuButton>
           <BellIcon
             color={navbarIcon}
             mt='-4px'

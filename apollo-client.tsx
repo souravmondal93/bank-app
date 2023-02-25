@@ -10,7 +10,7 @@ const { GRAPHQL_API_URL } = publicRuntimeConfig;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     console.log('Errors: ', graphQLErrors);
-    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+    graphQLErrors.forEach(({ message, locations, path, extensions }: any) => {
       console.error(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       );

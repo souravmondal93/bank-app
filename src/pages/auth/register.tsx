@@ -200,7 +200,7 @@ function Register() {
                   name='firstName'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.firstName}>
+                    <FormControl isInvalid={Boolean(errors.firstName)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -244,7 +244,7 @@ function Register() {
                   name='lastName'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.lastName}>
+                    <FormControl isInvalid={Boolean(errors.lastName)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -289,7 +289,7 @@ function Register() {
                   name='email'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.email}>
+                    <FormControl isInvalid={Boolean(errors.email)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -333,7 +333,7 @@ function Register() {
                   name='address'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.address}>
+                    <FormControl isInvalid={Boolean(errors.address)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -377,7 +377,7 @@ function Register() {
                   name='phone'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.phone}>
+                    <FormControl isInvalid={Boolean(errors.phone)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -421,7 +421,7 @@ function Register() {
                   name='occupation'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.occupation}>
+                    <FormControl isInvalid={Boolean(errors.occupation)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -465,7 +465,7 @@ function Register() {
                   name='income'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.income}>
+                    <FormControl isInvalid={Boolean(errors.income)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -509,7 +509,7 @@ function Register() {
                   name='pan'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.pan}>
+                    <FormControl isInvalid={Boolean(errors.pan)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -553,7 +553,7 @@ function Register() {
                   name='password'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.password}>
+                    <FormControl isInvalid={Boolean(errors.password)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'
@@ -599,7 +599,7 @@ function Register() {
                   name='confirmPassword'
                   control={control}
                   render={({ field }) => (
-                    <FormControl isInvalid={errors.confirmPassword}>
+                    <FormControl isInvalid={Boolean(errors.confirmPassword)}>
                       <FormLabel
                         color={titleColor}
                         ms='4px'

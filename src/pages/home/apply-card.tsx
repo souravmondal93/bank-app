@@ -143,7 +143,8 @@ export default function ApplyCard() {
 									value={80}
 									thickness={6}
 									color='#05CD99'
-									variant='vision'>
+									// variant='vision'
+									>
 									<CircularProgressLabel>
 										<Flex direction='column' justify='center' align='center'>
 											<Text color='gray.400' fontSize='sm'>
@@ -243,7 +244,8 @@ export default function ApplyCard() {
 									value={95}
 									thickness={6}
 									color='#05CD99'
-									variant='vision'>
+									// variant='vision'
+									>
 									<CircularProgressLabel>
 										<Flex direction='column' justify='center' align='center'>
 											<Text color='gray.400' fontSize='sm'>

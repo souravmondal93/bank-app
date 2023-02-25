@@ -451,8 +451,8 @@ function Dashboard() {
                   bg='linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%)'
                   borderRadius='20px'
                   display={{ sm: 'flex', md: 'block' }}
-                  justify={{ sm: 'center', md: 'flex-start' }}
-                  align={{ sm: 'center', md: 'flex-start' }}
+                  // justify={{ sm: 'center', md: 'flex-start' }}
+                  // align={{ sm: 'center', md: 'flex-start' }}
                   minH={{ sm: '180px', md: '220px' }}
                   p={{ sm: '0px', md: '22px' }}
                 >

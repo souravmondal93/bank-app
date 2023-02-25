@@ -115,7 +115,7 @@ function SavingsAccount() {
                     color='gray.400'
                     w='15px'
                     h='15px'
-                    color='#fff'
+                    // color='#fff'
                     me='6px'
                   />
                   <Text color='gray.400' fontSize='sm'>
@@ -263,8 +263,8 @@ function SavingsAccount() {
                   <Flex direction='column'>
                     <Button
                       bg='transparent'
-                      _hover='none'
-                      _active='none'
+                      // _hover='none'
+                      // _active='none'
                       alignSelf='flex-end'
                       p='0px'>
                       <Icon

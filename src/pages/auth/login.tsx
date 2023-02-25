@@ -112,7 +112,7 @@ function Login() {
             rules={{ required: "Email is required" }}
             control={control}
             render={({ field }) => (
-              <FormControl isInvalid={errors.email}>
+              <FormControl isInvalid={Boolean(errors.email)}>
                 <FormLabel
                   ms='4px'
                   fontSize='sm'
@@ -150,7 +150,7 @@ function Login() {
             rules={{ required: "Password is required" }}
             control={control}
             render={({ field }) => (
-              <FormControl isInvalid={errors.password}>
+              <FormControl isInvalid={Boolean(errors.password)}>
                 <FormLabel
                   ms='4px'
                   fontSize='sm'

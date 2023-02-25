@@ -14,11 +14,9 @@ import {
   Stack,
   Text,
   useDisclosure,
+  Icon
 } from "@chakra-ui/react";
-import IconBox from "../../components/Icons/IconBox";
-import { SimmmpleLogoWhite } from "../../components/Icons/Icons";
-import { Separator } from "../../components/Separator/Separator";
-import { SidebarHelp } from "../../components/Sidebar/SidebarHelp";
+import IconBox from "../Icons/IconBox";
 import Brand from "@/components/Sidebar/brand";
 import PropTypes from "prop-types";
 import React from "react";
@@ -98,7 +96,7 @@ function Sidebar(props) {
               }}
               py='12px'
               borderRadius='15px'
-              _hover='none'
+              // _hover='none'
               w='100%'
               _active={{
                 bg: "inherit",
@@ -145,7 +143,7 @@ function Sidebar(props) {
                 xl: "16px",
               }}
               borderRadius='15px'
-              _hover='none'
+              // _hover='none'
               w='100%'
               _active={{
                 bg: "inherit",
@@ -225,7 +223,14 @@ function Sidebar(props) {
 
 // FUNCTIONS
 
-export function SidebarResponsive(props) {
+type SidebarProps = {
+  routes: any;
+  iconColor: string;
+  logoText: string;
+  secondary: string;
+};
+
+export function SidebarResponsive(props: SidebarProps) {
   // to check for active links and opened collapses
   let location = useRouter();
   // this is for the rest of the collapses
@@ -292,7 +297,7 @@ export function SidebarResponsive(props) {
               }}
               py='12px'
               borderRadius='15px'
-              _hover='none'
+              // _hover='none'
               w='100%'
               _active={{
                 bg: "inherit",
@@ -338,7 +343,7 @@ export function SidebarResponsive(props) {
                 xl: "16px",
               }}
               borderRadius='15px'
-              _hover='none'
+              // _hover='none'
               w='100%'
               _active={{
                 bg: "inherit",
@@ -393,7 +398,7 @@ export function SidebarResponsive(props) {
         w='18px'
         h='18px'
         ref={btnRef}
-        colorScheme='teal'
+        // colorScheme='teal'
         onClick={onOpen}
       />
       <Drawer

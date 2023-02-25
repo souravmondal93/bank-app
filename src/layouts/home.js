@@ -4,7 +4,6 @@ import { ChakraProvider, Portal, useDisclosure } from '@chakra-ui/react';
 import Footer from '@/components/Footer/footer';
 // Layout components
 import AdminNavbar from '@/components/Navbars/AdminNavbar.js';
-import Sidebar from '@/components/Sidebar/Sidebar.js';
 import React, { useState } from 'react';
 // import { Redirect, Route, Switch } from "react-router-dom";
 import routes from '../routes.js';
@@ -15,6 +14,7 @@ import theme from '../theme/themeAdmin.js';
 import MainPanel from '@/components/Layout/MainPanel';
 import PanelContainer from '@/components/Layout/PanelContainer';
 import PanelContent from '@/components/Layout/PanelContent';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import { useRouter } from 'next/router';
 
 export default function HomeLayout(props) {
