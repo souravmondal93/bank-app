@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import HomeLayout from '../src/layouts/home';
-import CreditCard, { CREDIT_CARD_DATA } from '../src/pages/home/credit-card';
-import { MOCK_CREDIT_CARD_DATA } from '../__mock__/credit-card.data';
+import HomeLayout from '../../layouts/home';
+import CreditCard, { CREDIT_CARD_DATA } from '../../pages/home/credit-card';
+import { MOCK_CREDIT_CARD_DATA } from '../../../__mock__/credit-card.data';
 
 describe('Credit Card Page', () => {
   let originalFetch;

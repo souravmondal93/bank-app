@@ -3,8 +3,8 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import mockRouter from 'next-router-mock';
 
-import AuthLayout from '../src/layouts/auth';
-import Register, { REGISTER_USER } from '../src/pages/auth/register';
+import AuthLayout from '../../layouts/auth';
+import Register, { REGISTER_USER } from './register';
 
 describe('Register Page', () => {
   let originalFetch;

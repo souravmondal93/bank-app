@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import HomeLayout from '../src/layouts/home';
-import Dashboard, { DASHBOARD_DATA } from '../src/pages/home/dashboard';
-import { MOCK_DASHBOARD_DATA } from '../__mock__/dashboard-data';
+import HomeLayout from '../../layouts/home';
+import Dashboard, { DASHBOARD_DATA } from '../../pages/home/dashboard';
+import { MOCK_DASHBOARD_DATA } from '../../../__mock__/dashboard-data';
 
 describe('Dashboard Page', () => {
   let originalFetch;
