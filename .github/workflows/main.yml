@@ -1,4 +1,7 @@
-name: build-and-deploy
+name: build-test-deploy
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
   push:
@@ -7,14 +10,14 @@ on:
     - release/*
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.4.0
 
     - uses: actions/setup-node@v3.6.0
       with:
-        node-version: '16.18.0'
+        node-version: '18.12.0'
     
     - name: Install pnpm globally
       run: npm i -g pnpm
@@ -27,3 +30,24 @@ jobs:
       
     - name: Test
       run: pnpm run test-ci
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3.4.0
+
+    - uses: actions/setup-node@v3.6.0
+      with:
+        node-version: '18.12.0'
+    
+    - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
