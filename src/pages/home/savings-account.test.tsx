@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import HomeLayout from '../src/layouts/home';
-import SavingsAccount, { SAVINGS_ACCOUNT_DATA } from '../src/pages/home/savings-account';
-import { MOCK_SAVINGS_ACCOUNT_DATA } from '../__mock__/savings-account.data';
+import HomeLayout from '../../layouts/home';
+import SavingsAccount, { SAVINGS_ACCOUNT_DATA } from '../../pages/home/savings-account.page';
+import { MOCK_SAVINGS_ACCOUNT_DATA } from '../../../__mock__/savings-account.data';
 
 describe('Savings Account Page', () => {
   let originalFetch;
