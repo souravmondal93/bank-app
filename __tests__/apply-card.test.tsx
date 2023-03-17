@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import HomeLayout from '../../layouts/home';
-import ApplyCard, { DASHBOARD_DATA } from './apply-card';
-import { MOCK_APPLY_PAGE_DATA } from '../../../__mock__/apply-page-data';
+import HomeLayout from '../src/layouts/home';
+import ApplyCard, { DASHBOARD_DATA } from '../src/pages/home/apply-card';
+import { MOCK_APPLY_PAGE_DATA } from '../__mock__/apply-page-data';
 
 describe('Apply Card Page', () => {
   let originalFetch;
