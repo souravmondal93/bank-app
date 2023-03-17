@@ -74,7 +74,7 @@ function Sidebar(props) {
         );
       }
       return (
-        <Link as={NextLink} href={prop.layout + prop.path}>
+        <Link as={NextLink} key={key} href={prop.layout + prop.path}>
           {activeRoute(prop.layout + prop.path) === "active" ? (
             <Button
               boxSize='initial'

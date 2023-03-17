@@ -38,7 +38,7 @@ function Custom500() {
       >
         <Heading color={titleColor} fontSize='32px' mb='10px' h='200px'>
           <Text fontSize='6xl'>Uh Oh!</Text>
-          <Text fontSize='3xl'>This time it's on us!</Text>
+          <Text fontSize='3xl'>This time it&apos;s on us!</Text>
           <Text fontSize='md'>We are working on to getting this issue fixed.</Text>
         </Heading>
         <Flex

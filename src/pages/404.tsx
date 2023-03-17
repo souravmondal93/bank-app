@@ -38,7 +38,7 @@ function Custom404() {
       >
         <Heading color={titleColor} fontSize='32px' mb='10px' h='200px'>
           <Text fontSize='6xl'>Uh Oh!</Text>
-          <Text fontSize='2xl'>Looks like you shouldn't be here!</Text>
+          <Text fontSize='2xl'>Looks like you shouldn&apos;t be here!</Text>
         </Heading>
         
 

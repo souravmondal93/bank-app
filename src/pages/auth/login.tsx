@@ -70,7 +70,7 @@ function Login() {
       client.setLink(setAuthToken(data.loginUser.access_token).concat(httpLink));
       router.push('/home/dashboard');
     }
-  }, [data]);
+  }, [data, router, client]);
 
   if (loading) return <h1>Loading ...</h1>;
 
@@ -225,7 +225,7 @@ function Login() {
             mt='0px'
           >
             <Text color={textColor} fontWeight='medium'>
-              Don't have an account?
+              Don&apos;t have an account?
               <Link as={NextLink} color={titleColor} href='/auth/register' ms='5px' fontWeight='bold'>
                 Sign Up
               </Link>

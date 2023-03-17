@@ -120,7 +120,7 @@ function Dashboard() {
       newUser({ variables: { newUser: { newUser: false } } });
       onOpen();
     }
-  }, [data]);
+  }, [data, newUser, onOpen]);
 
   const getYearlyDataForLineChart = ({
     savingsAccountByMonth,
@@ -625,7 +625,7 @@ function Dashboard() {
           footer={
             <>
               <Button variant='brand' onClick={onClose}>
-                Let's Explore
+                Let&apos;s Explore
               </Button>
             </>
           }

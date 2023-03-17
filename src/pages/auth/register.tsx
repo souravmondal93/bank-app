@@ -128,7 +128,7 @@ function Register() {
       reset();
       onOpen();
     }
-  }, [data]);
+  }, [data, reset, onOpen]);
 
   useEffect(() => {
     console.log('Registration Errors: ', errors);
@@ -647,7 +647,7 @@ function Register() {
                       </GradientBorder>
                       {errors.confirmPassword && (
                         <FormErrorMessage mt='0px' mb='20px'>
-                          Entered Passwords doesn't match
+                          Entered Passwords doesn&apos;t match
                         </FormErrorMessage>
                       )}
                     </FormControl>
