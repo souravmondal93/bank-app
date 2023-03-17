@@ -14,13 +14,13 @@ import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import NextLink from 'next/link';
-import routes from '../../routes';
+import routes from '../../../routes';
 
 // Custom Icons
-import { ProfileIcon } from '@/components/icons/all-icons';
+import { ProfileIcon } from '@/components/atoms/icons/all-icons';
 // Custom Components
-import { SidebarResponsive } from '../../components/sidebar/sidebar-responsive';
-import { httpLink, setAuthToken } from '../../../apollo-client';
+import { SidebarResponsive } from '@/components/molecules/sidebar/sidebar-responsive';
+import { httpLink, setAuthToken } from '../../../../apollo-client';
 
 const LOGIN_USER = gql`
   mutation Mutation($loginUserInput: LoginUserInput!) {

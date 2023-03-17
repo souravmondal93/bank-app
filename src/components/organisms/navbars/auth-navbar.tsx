@@ -9,10 +9,10 @@ import {
 import PropTypes from "prop-types";
 import React from "react";
 
-import { SidebarResponsive } from "@/components/sidebar/sidebar-responsive";
+import { SidebarResponsive } from "@/components/molecules/sidebar/sidebar-responsive";
 import { AuthLinks } from './auth-links';
 import { Brand } from './brand';
-import routes from "../../routes";
+import routes from "../../../routes";
 
 type AuthNavbarProps =  {
   logoText: string;

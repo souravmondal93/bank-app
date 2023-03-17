@@ -8,17 +8,17 @@ import { Box, Button, Flex, Grid, Icon, Spacer, Text } from '@chakra-ui/react';
 const BackgroundCard1 = 'assets/img/billing-background-card.png';
 
 // Custom components
-import Card from '@/components/card/card';
-import CardBody from '@/components/card/card-body';
-import CardHeader from '@/components/card/card-header';
-import IconBox from '@/components/icons/icon-box';
-import TransactionRow from '@/components/tables/transaction-row';
+import Card from '@/components/molecules/card/card';
+import CardBody from '@/components/molecules/card/card-body';
+import CardHeader from '@/components/molecules/card/card-header';
+import IconBox from '@/components/atoms/icons/icon-box';
+import TransactionRow from '@/components/atoms/tables/transaction-row';
 
 // Icons
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { RiMastercardFill } from 'react-icons/ri';
-import { BillIcon, GraphIcon } from '@/components/icons/all-icons';
+import { BillIcon, GraphIcon } from '@/components/atoms/icons/all-icons';
 
 // Data
 import HomeLayout from '@/layouts/home';

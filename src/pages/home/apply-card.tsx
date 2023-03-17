@@ -13,8 +13,8 @@ import {
 import { gql, useQuery } from '@apollo/client';
 
 // Custom components
-import Card from '@/components/card/card';
-import Modal from '@/components/modal/modal';
+import Card from '@/components/molecules/card/card';
+import Modal from '@/components/molecules/modal/modal';
 import HomeLayout from '@/layouts/home';
 
 ApplyCard.getLayout = function getLayout(page: ReactElement) {

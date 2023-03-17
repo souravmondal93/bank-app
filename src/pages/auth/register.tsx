@@ -22,8 +22,8 @@ import { gql, useMutation } from '@apollo/client';
 // Layout
 import AuthLayout from '@/layouts/auth';
 // Custom Components
-import GradientBorder from '@/components/gradient-border/gradient-border';
-import Modal from '@/components/modal/modal';
+import GradientBorder from '@/components/atoms/gradient-border/gradient-border';
+import Modal from '@/components/molecules/modal/modal';
 
 Register.getLayout = function getLayout(page: ReactElement) {
   return <AuthLayout>{page}</AuthLayout>;

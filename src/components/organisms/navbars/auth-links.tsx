@@ -8,10 +8,8 @@ import NextLink from 'next/link'
 
 import {
   DocumentIcon,
-  HomeIcon,
-  PersonIcon,
   RocketIcon,
-} from "@/components/icons/all-icons";
+} from "@/components/atoms/icons/all-icons";
 
 const navbarIcon = "white";
 

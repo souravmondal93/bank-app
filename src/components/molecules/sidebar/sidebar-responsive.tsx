@@ -16,8 +16,8 @@ import {
   useDisclosure,
   Icon
 } from "@chakra-ui/react";
-import IconBox from "../icons/icon-box";
-import Brand from "@/components/sidebar/brand";
+import IconBox from "@/components/atoms/icons/icon-box";
+import Brand from "@/components/molecules/sidebar/brand";
 import PropTypes from "prop-types";
 import React from "react";
 import NextLink from "next/link";

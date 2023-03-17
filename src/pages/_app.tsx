@@ -8,7 +8,7 @@ import Head from 'next/head';
 
 import client from '../../apollo-client';
 import '../styles/globals.css';
-import ErrorBoundary from '@/components/error-boundary/error-boundary';
+import ErrorBoundary from '@/components/atoms/error-boundary/error-boundary';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['300', '400', '500', '700'],

@@ -1,9 +1,9 @@
 // Chakra imports
 import { ChakraProvider, Portal, useDisclosure } from '@chakra-ui/react';
 // import Configurator from "components/Configurator/Configurator";
-import Footer from '@/components/footer/footer';
+import Footer from '@/components/molecules/footer/footer';
 // Layout components
-import AdminNavbar from '@/components/navbars/admin-navbar';
+import AdminNavbar from '@/components/organisms/navbars/admin-navbar';
 import React, { useState } from 'react';
 // import { Redirect, Route, Switch } from "react-router-dom";
 import routes from '../routes';
@@ -11,10 +11,10 @@ import routes from '../routes';
 import theme from '../theme/theme-admin';
 // import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
 // Custom components
-import MainPanel from '@/components/layout/main-panel';
-import PanelContainer from '@/components/layout/panel-container';
-import PanelContent from '@/components/layout/panel-content';
-import Sidebar from '@/components/sidebar/sidebar';
+import MainPanel from '@/components/molecules/layout/main-panel';
+import PanelContainer from '@/components/molecules/layout/panel-container';
+import PanelContent from '@/components/molecules/layout/panel-content';
+import Sidebar from '@/components/molecules/sidebar/sidebar';
 import { useRouter } from 'next/router';
 
 export default function HomeLayout(props) {

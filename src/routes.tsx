@@ -3,7 +3,7 @@ import {
   StatsIcon,
   CreditIcon,
   SupportIcon,
-} from "@/components/icons/all-icons";
+} from "@/components/atoms/icons/all-icons";
 
 const dashRoutes = [
   {

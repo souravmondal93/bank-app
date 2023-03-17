@@ -20,12 +20,12 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 
 // Custom components
-import Card from '@/components/card/card';
-import CardBody from '@/components/card/card-body';
-import CardHeader from '@/components/card/card-header';
-import BarChart from '@/components/charts/bar-chart';
-import LineChart from '@/components/charts/line-chart';
-import IconBox from '@/components/icons/icon-box';
+import Card from '@/components/molecules/card/card';
+import CardBody from '@/components/molecules/card/card-body';
+import CardHeader from '@/components/molecules/card/card-header';
+import BarChart from '@/components/organisms/charts/bar-chart';
+import LineChart from '@/components/organisms/charts/line-chart';
+import IconBox from '@/components/atoms/icons/icon-box';
 // Icons
 import {
   CartIcon,
@@ -34,7 +34,7 @@ import {
   RocketIcon,
   StatsIcon,
   WalletIcon,
-} from '@/components/icons/all-icons';
+} from '@/components/atoms/icons/all-icons';
 // Data
 import {
   barChartOptionsDashboard,
@@ -42,7 +42,7 @@ import {
 } from '@/variables/charts';
 // Layouts
 import HomeLayout from '@/layouts/home';
-import Modal from '@/components/modal/modal';
+import Modal from '@/components/molecules/modal/modal';
 
 export const DASHBOARD_DATA = gql`
   query Query {
