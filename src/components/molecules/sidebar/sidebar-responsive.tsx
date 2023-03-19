@@ -79,7 +79,7 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
         );
       }
       return (
-        <Link as={NextLink} href={prop.layout + prop.path}>
+        <Link as={NextLink} href={prop.layout + prop.path} key={key}>
           {activeRoute(prop.layout + prop.path) === "active" ? (
             <Button
               boxSize='initial'
