@@ -1,6 +1,9 @@
-/*eslint-disable*/
-import { HamburgerIcon } from "@chakra-ui/icons";
-// chakra imports
+import PropTypes from "prop-types";
+import React from "react";
+import NextLink from "next/link";
+import { useRouter } from 'next/router'
+
+// Chakra Imports
 import {
   Box,
   Button,
@@ -16,12 +19,11 @@ import {
   useDisclosure,
   Icon
 } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+
 import IconBox from "@/components/atoms/icons/icon-box";
 import Brand from "@/components/molecules/sidebar/brand";
-import PropTypes from "prop-types";
-import React from "react";
-import NextLink from "next/link";
-import { useRouter } from 'next/router'
+
 
 type SidebarResponsiveProps = {
   routes: any;
@@ -229,7 +231,6 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
               <Stack direction='column' mb='40px'>
                 <Box>{links}</Box>
               </Stack>
-              {/* <SidebarHelp></SidebarHelp> */}
             </Box>
           </DrawerBody>
         </DrawerContent>

@@ -1,11 +1,13 @@
+import NextLink from "next/link";
+
 import { Box, Link, Text } from '@chakra-ui/react';
 import { Separator } from '@/components/atoms/separator/separator';
 
 const Brand = ({ logoText }: { logoText: string }) => (
   <Box pt={'35px'} mb='8px'>
     <Link
-      href={`${process.env.PUBLIC_URL}/#/`}
-      target='_blank'
+      as={NextLink}
+      href="/home/dashboard"
       display='flex'
       lineHeight='100%'
       mb='30px'

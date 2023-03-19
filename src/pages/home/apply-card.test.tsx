@@ -3,8 +3,9 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 import HomeLayout from '../../layouts/home';
-import ApplyCard, { DASHBOARD_DATA } from './apply-card.page';
+import ApplyCard from './apply-card.page';
 import { MOCK_APPLY_PAGE_DATA } from '../../../__mock__/apply-page-data';
+import { APPLY_CARD_DATA } from '@/graphql/query/apply-card.query';
 
 describe('Apply Card Page', () => {
   let originalFetch;
@@ -28,7 +29,7 @@ describe('Apply Card Page', () => {
   const mocks = [
     {
       request: {
-        query: DASHBOARD_DATA,
+        query: APPLY_CARD_DATA,
       },
       result: MOCK_APPLY_PAGE_DATA,
     },

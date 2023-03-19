@@ -79,37 +79,39 @@ export default function HomeLayout(props) {
 
   return (
     <ChakraProvider theme={theme} resetCSS={false}>
-      <Sidebar
-        routes={routes}
-        logoText={'VISION BANK'}
-        display='none'
-        sidebarVariant={sidebarVariant}
-        {...rest}
-      />
-      <MainPanel
-        ref={mainPanel}
-        w={{
-          base: '100%',
-          xl: 'calc(100% - 275px)',
-        }}
-      >
-        <Portal>
-          <AdminNavbar
-            onOpen={onOpen}
-            logoText={'VISION BANK'}
-            brandText={getActiveRoute(routes)}
-            secondary={getActiveNavbar(routes)}
-            fixed={fixed}
-            {...rest}
-          />
-        </Portal>
-        {/* {getRoute() ? ( */}
-        <PanelContent>
-          <PanelContainer>{children}</PanelContainer>
-        </PanelContent>
-        {/* ) : null} */}
-        <Footer />
-      </MainPanel>
+      <main role='main'>
+        <Sidebar
+          routes={routes}
+          logoText={'VISION BANK'}
+          display='none'
+          sidebarVariant={sidebarVariant}
+          {...rest}
+        />
+        <MainPanel
+          ref={mainPanel}
+          w={{
+            base: '100%',
+            xl: 'calc(100% - 275px)',
+          }}
+        >
+          <Portal>
+            <AdminNavbar
+              onOpen={onOpen}
+              logoText={'VISION BANK'}
+              brandText={getActiveRoute(routes)}
+              secondary={getActiveNavbar(routes)}
+              fixed={fixed}
+              {...rest}
+            />
+          </Portal>
+          {/* {getRoute() ? ( */}
+          <PanelContent>
+            <PanelContainer>{children}</PanelContainer>
+          </PanelContent>
+          {/* ) : null} */}
+          <Footer />
+        </MainPanel>
+      </main>
     </ChakraProvider>
   );
 }

@@ -4,7 +4,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import mockRouter from 'next-router-mock';
 
 import AuthLayout from '../../layouts/auth';
-import Register, { REGISTER_USER } from '../../pages/auth/register.page';
+import Register from '../../pages/auth/register.page';
+import { REGISTER_USER } from '@/graphql/mutation/register.mutation';
 
 describe('Register Page', () => {
   let originalFetch;

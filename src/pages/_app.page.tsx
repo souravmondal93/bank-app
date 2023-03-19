@@ -1,10 +1,10 @@
-import { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
 import { ChakraProvider } from '@chakra-ui/react';
 import { ApolloProvider } from '@apollo/client';
 import { Plus_Jakarta_Sans } from '@next/font/google';
-import Head from 'next/head';
+import reportAccessibility from '../utils/report-accessibility';
 
 import client from '../../apollo-client';
 import '../styles/globals.css';
@@ -24,10 +24,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function CustomApp({
-  Component,
-  pageProps,
-}: AppPropsWithLayout) {
+function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -38,16 +35,17 @@ export default function CustomApp({
           font-family: ${plusJakartaSans.style.fontFamily};
         }
       `}</style>
-      {/* <Head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
-      </Head> */}
-        <ChakraProvider>
-          <ApolloProvider client={client}>
-      <ErrorBoundary>
+      <ChakraProvider>
+        <ApolloProvider client={client}>
+          <ErrorBoundary>
             {getLayout(<Component {...pageProps} />)}
-      </ErrorBoundary>
-          </ApolloProvider>
-        </ChakraProvider>
+          </ErrorBoundary>
+        </ApolloProvider>
+      </ChakraProvider>
     </>
   );
 }
+
+// reportAccessibility(React)
+
+export default CustomApp;

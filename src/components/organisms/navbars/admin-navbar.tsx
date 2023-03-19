@@ -131,7 +131,10 @@ export default function AdminNavbar(props) {
             _focus={{
               boxShadow: "none",
             }}>
+              <h1>
+
             {brandText}
+              </h1>
           </Link>
         </Box>
         <Box ms='auto' w={{ sm: "100%", md: "unset" }}>

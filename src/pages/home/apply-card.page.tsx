@@ -1,4 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
+import Head from 'next/head';
+
 // Chakra imports
 import {
 	Box,
@@ -17,36 +19,29 @@ import Card from '@/components/molecules/card/card';
 import Modal from '@/components/molecules/modal/modal';
 import HomeLayout from '@/layouts/home';
 
+import { APPLY_CARD_DATA } from '@/graphql/query/apply-card.query';
+import CONSTANTS from '@/common/constants';
+
+import reportAccessibility from '@/utils/report-accessibility';
+
 ApplyCard.getLayout = function getLayout(page: ReactElement) {
-  return <HomeLayout>{page}</HomeLayout>;
+  return (
+    <HomeLayout>
+      <Head>
+        <title>Vision Bank - Apply Card</title>
+      </Head>
+      {page}
+    </HomeLayout>
+  );
 };
 
-export const DASHBOARD_DATA = gql`
-  query Query {
-    whoAmI {
-      firstName
-      lastName
-      income
-    }
-  }
-`;
 
-const DEFAULT_MODAL_VALUES = {
-	title: '',
-	body: 'For Gold card, income should be between £20,000 and £50,000. For Platinum card, income should be more than £50,000.',
-	footerText: ''
-}
-const GOLD_CARD_MIN_BALANCE = 20000;
-const GOLD_CARD_MAX_BALANCE = 50000;
-const PLATINUM_CARD_MIN_BALANCE = 50000;
-const CARD_TYPE_GOLD = 'CARD_TYPE_GOLD';
-const CARD_TYPE_PLATINUM = 'CARD_TYPE_PLATINUM';
 
-export default function ApplyCard() {
+function ApplyCard() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, loading, error } = useQuery(DASHBOARD_DATA);
+  const { data, loading, error } = useQuery(APPLY_CARD_DATA);
 	const [income, setIncome] = useState(0);
-	const [modalValues, setModalValues] = useState(DEFAULT_MODAL_VALUES);
+	const [modalValues, setModalValues] = useState(CONSTANTS.DEFAULT_MODAL_VALUES);
 
 	useEffect(() => {
 		if (data?.whoAmI?.income) {
@@ -55,13 +50,13 @@ export default function ApplyCard() {
 	}, [data]);
 
 	const applyCard = (cardType: string) => {
-		if (cardType === CARD_TYPE_GOLD && income >= GOLD_CARD_MIN_BALANCE && income <= GOLD_CARD_MAX_BALANCE) {
+		if (cardType === CONSTANTS.CARD_TYPE_GOLD && income >= CONSTANTS.GOLD_CARD_MIN_BALANCE && income <= CONSTANTS.GOLD_CARD_MAX_BALANCE) {
 			setModalValues({
 				title: 'Congrats!',
 				body: 'You have successfully placed order for your new Gold card.',
 				footerText: 'Yay!'
 			});
-		} else if (cardType === CARD_TYPE_PLATINUM && income > PLATINUM_CARD_MIN_BALANCE) {
+		} else if (cardType === CONSTANTS.CARD_TYPE_PLATINUM && income > CONSTANTS.PLATINUM_CARD_MIN_BALANCE) {
 			setModalValues({
 				title: 'Congrats!',
 				body: 'You have successfully placed order for your new Platinum card.',
@@ -70,7 +65,7 @@ export default function ApplyCard() {
 		} else {
 			setModalValues({
 				title: 'Card Details',
-				body: DEFAULT_MODAL_VALUES.body,
+				body: CONSTANTS.DEFAULT_MODAL_VALUES.body,
 				footerText: 'Close'
 			})
 		}
@@ -147,7 +142,7 @@ export default function ApplyCard() {
 									value={80}
 									thickness={6}
 									color='#05CD99'
-									// variant='vision'
+									aria-label="Gold card customer satisfaction"
 									>
 									<CircularProgressLabel>
 										<Flex direction='column' justify='center' align='center'>
@@ -177,7 +172,7 @@ export default function ApplyCard() {
 								right="0"
 								px='30px'
 								data-testid="gold-card-btn"
-								onClick={() => applyCard(CARD_TYPE_GOLD)}>
+								onClick={() => applyCard(CONSTANTS.CARD_TYPE_GOLD)}>
 								Apply
 							</Button>
 						</Flex>
@@ -245,6 +240,7 @@ export default function ApplyCard() {
 									value={95}
 									thickness={6}
 									color='#05CD99'
+									aria-label="Platinum card customer satisfaction"
 									// variant='vision'
 									>
 									<CircularProgressLabel>
@@ -275,7 +271,7 @@ export default function ApplyCard() {
 								right="0"
 								px='30px'
 								data-testid="platinum-card-btn"
-								onClick={() => applyCard(CARD_TYPE_PLATINUM)}>
+								onClick={() => applyCard(CONSTANTS.CARD_TYPE_PLATINUM)}>
 								Apply
 							</Button>
 						</Flex>
@@ -299,3 +295,7 @@ export default function ApplyCard() {
 		</>
 	);
 }
+
+reportAccessibility(React);
+
+export default ApplyCard;

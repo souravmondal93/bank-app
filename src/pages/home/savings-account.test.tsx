@@ -3,8 +3,9 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 import HomeLayout from '../../layouts/home';
-import SavingsAccount, { SAVINGS_ACCOUNT_DATA } from '../../pages/home/savings-account.page';
+import SavingsAccount from '../../pages/home/savings-account.page';
 import { MOCK_SAVINGS_ACCOUNT_DATA } from '../../../__mock__/savings-account.data';
+import { SAVINGS_ACCOUNT_DATA } from '@/graphql/query/savings-account.query';
 
 describe('Savings Account Page', () => {
   let originalFetch;

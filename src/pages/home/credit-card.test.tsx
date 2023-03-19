@@ -3,8 +3,10 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 import HomeLayout from '../../layouts/home';
-import CreditCard, { CREDIT_CARD_DATA } from '../../pages/home/credit-card.page';
+import CreditCard from '../../pages/home/credit-card.page';
+import { CREDIT_CARD_DATA } from '@/graphql/query/credit-card.query';
 import { MOCK_CREDIT_CARD_DATA } from '../../../__mock__/credit-card.data';
+
 
 describe('Credit Card Page', () => {
   let originalFetch;

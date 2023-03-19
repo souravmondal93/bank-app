@@ -4,7 +4,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import mockRouter from 'next-router-mock';
 
 import AuthLayout from '../../layouts/auth';
-import Login, { LOGIN_USER } from './login.page';
+import Login from './login.page';
+import { LOGIN_USER } from '@/graphql/mutation/login.mutation';
 
 describe('Login Page', () => {
   let originalFetch;

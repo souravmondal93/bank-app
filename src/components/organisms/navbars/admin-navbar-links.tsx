@@ -90,7 +90,7 @@ export default function AdminNavbarLinks(props: AdminNavbarLinksProps) {
         {...rest}
       />
       <Menu>
-        <MenuButton>
+        <MenuButton aria-label="Show notifications">
           <BellIcon
             color={navbarIcon}
             mt='-4px'

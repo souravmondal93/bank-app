@@ -57,7 +57,7 @@ export default function AuthNavbar(props: AuthNavbarProps) {
       alignItems='center'>
       <Flex w='100%' justifyContent={{ sm: "start", lg: "space-between" }}>
         <Brand logoText={logoText} />
-        <Box
+        {/* <Box
           ms={{ base: "auto", lg: "0px" }}
           display={{ base: "flex", lg: "none" }}>
           <SidebarResponsive
@@ -67,9 +67,9 @@ export default function AuthNavbar(props: AuthNavbarProps) {
             secondary={props.secondary}
             {...rest}
           />
-        </Box>
+        </Box> */}
         <AuthLinks />
-        <Link href=''>
+        <Link href='' aria-label='Free Account'>
           <Button
             fontSize='xs'
             variant='brand'

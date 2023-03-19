@@ -1,4 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
+import Head from 'next/head';
+import { useQuery, useMutation } from '@apollo/client';
 
 // Chakra imports
 import {
@@ -6,18 +8,11 @@ import {
   Flex,
   Grid,
   useDisclosure,
-  Progress,
   SimpleGrid,
-  Spacer,
-  Stat,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
   Text,
   Button,
-  Link,
+  Spacer
 } from '@chakra-ui/react';
-import { gql, useQuery, useMutation } from '@apollo/client';
 
 // Custom components
 import Card from '@/components/molecules/card/card';
@@ -25,16 +20,7 @@ import CardBody from '@/components/molecules/card/card-body';
 import CardHeader from '@/components/molecules/card/card-header';
 import BarChart from '@/components/organisms/charts/bar-chart';
 import LineChart from '@/components/organisms/charts/line-chart';
-import IconBox from '@/components/atoms/icons/icon-box';
-// Icons
-import {
-  CartIcon,
-  DocumentIcon,
-  GlobeIcon,
-  RocketIcon,
-  StatsIcon,
-  WalletIcon,
-} from '@/components/atoms/icons/all-icons';
+
 // Data
 import {
   barChartOptionsDashboard,
@@ -43,51 +29,12 @@ import {
 // Layouts
 import HomeLayout from '@/layouts/home';
 import Modal from '@/components/molecules/modal/modal';
+import StatsDisplay from '@/components/molecules/stats-display/stats-display';
+import SpendInfo from '@/components/molecules/spend-info/spend-info';
 
-export const DASHBOARD_DATA = gql`
-  query Query {
-    getMyAccount {
-      balance
-    }
-    whoAmI {
-      firstName
-      lastName
-      newUser
-    }
-    insights {
-      _id
-      startingBalance
-      startingBalanceChange
-      totalMoneyIn
-      totalMoneyInChange
-      totalMoneyOut
-      totalMoneyOutChange
-      leftToSpend
-      leftToSpendChange
-      shoppingExpenditure
-      groceriesExpenditure
-      billsExpenditure
-      miscExpenditure
-      lastWeekChange
-      savingsAccountByMonth
-      creditCardByMonth
-      months
-      lastYearChange
-      spendingByWeek {
-        spending
-        week
-      }
-    }
-  }
-`;
-
-const UPDATE_NEW_USER = gql`
-  mutation UpdateNewUser($newUser: NewUserUpdateInput!) {
-    updateNewUser(newUser: $newUser) {
-      newUser
-    }
-  }
-`;
+import reportAccessibility from '@/utils/report-accessibility';
+import { DASHBOARD_DATA } from '@/graphql/query/dashboard.query';
+import { UPDATE_NEW_USER } from '@/graphql/mutation/dashboard.mutation';
 
 interface UpdateNewUserData {
   updateNewUser: {
@@ -102,7 +49,14 @@ interface UpdateNewUserVariables {
 }
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
-  return <HomeLayout>{page}</HomeLayout>;
+  return (
+    <HomeLayout>
+      <Head>
+        <title>Vision Bank - Dashboard</title>
+      </Head>
+      {page}
+    </HomeLayout>
+  );
 };
 
 function Dashboard() {
@@ -172,169 +126,44 @@ function Dashboard() {
     <>
       <Flex flexDirection='column' pt={{ base: '120px', md: '75px' }}>
         <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
-          {/* MiniStatistics Card */}
           <Card>
             <CardBody>
-              <Flex
-                flexDirection='row'
-                align='center'
-                justify='center'
-                w='100%'
-              >
-                <Stat me='auto'>
-                  <StatLabel
-                    fontSize='sm'
-                    color='gray.400'
-                    fontWeight='bold'
-                    pb='2px'
-                  >
-                    Starting Balance
-                  </StatLabel>
-                  <Flex>
-                    <StatNumber fontSize='lg' color='#fff'>
-                      £{data.insights.startingBalance}
-                    </StatNumber>
-                    <StatHelpText
-                      alignSelf='flex-end'
-                      justifySelf='flex-end'
-                      m='0px'
-                      color='green.400'
-                      fontWeight='bold'
-                      ps='3px'
-                      fontSize='md'
-                    >
-                      {data.insights.startingBalanceChange}
-                    </StatHelpText>
-                  </Flex>
-                </Stat>
-                <IconBox as='box' h={'45px'} w={'45px'} bg='brand.200'>
-                  <WalletIcon h={'24px'} w={'24px'} color='#fff' />
-                </IconBox>
-              </Flex>
+              <StatsDisplay
+                label='Starting Balance'
+                value={`£${data.insights.startingBalance}`}
+                change={data.insights.startingBalanceChange}
+                icon='wallet'
+              />
             </CardBody>
           </Card>
-          {/* MiniStatistics Card */}
           <Card minH='83px'>
             <CardBody>
-              <Flex
-                flexDirection='row'
-                align='center'
-                justify='center'
-                w='100%'
-              >
-                <Stat me='auto'>
-                  <StatLabel
-                    fontSize='sm'
-                    color='gray.400'
-                    fontWeight='bold'
-                    pb='2px'
-                  >
-                    Total Money In
-                  </StatLabel>
-                  <Flex>
-                    <StatNumber fontSize='lg' color='#fff'>
-                      £{data.insights.totalMoneyIn}
-                    </StatNumber>
-                    <StatHelpText
-                      alignSelf='flex-end'
-                      justifySelf='flex-end'
-                      m='0px'
-                      color='green.400'
-                      fontWeight='bold'
-                      ps='3px'
-                      fontSize='md'
-                    >
-                      {data.insights.totalMoneyInChange}
-                    </StatHelpText>
-                  </Flex>
-                </Stat>
-                <IconBox as='box' h={'45px'} w={'45px'} bg='brand.200'>
-                  <GlobeIcon h={'24px'} w={'24px'} color='#fff' />
-                </IconBox>
-              </Flex>
+              <StatsDisplay
+                label='Total Money In'
+                value={`£${data.insights.totalMoneyIn}`}
+                change={data.insights.totalMoneyInChange}
+                icon='globe'
+              />
             </CardBody>
           </Card>
-          {/* MiniStatistics Card */}
           <Card>
             <CardBody>
-              <Flex
-                flexDirection='row'
-                align='center'
-                justify='center'
-                w='100%'
-              >
-                <Stat>
-                  <StatLabel
-                    fontSize='sm'
-                    color='gray.400'
-                    fontWeight='bold'
-                    pb='2px'
-                  >
-                    Total Money Out
-                  </StatLabel>
-                  <Flex>
-                    <StatNumber fontSize='lg' color='#fff'>
-                      £{data.insights.totalMoneyOut}
-                    </StatNumber>
-                    <StatHelpText
-                      alignSelf='flex-end'
-                      justifySelf='flex-end'
-                      m='0px'
-                      color='red.500'
-                      fontWeight='bold'
-                      ps='3px'
-                      fontSize='md'
-                    >
-                      {data.insights.totalMoneyOutChange}
-                    </StatHelpText>
-                  </Flex>
-                </Stat>
-                <Spacer />
-                <IconBox as='box' h={'45px'} w={'45px'} bg='brand.200'>
-                  <DocumentIcon h={'24px'} w={'24px'} color='#fff' />
-                </IconBox>
-              </Flex>
+              <StatsDisplay
+                label='Total Money Out'
+                value={`£${data.insights.totalMoneyOut}`}
+                change={data.insights.totalMoneyOutChange}
+                icon='document'
+              />
             </CardBody>
           </Card>
-          {/* MiniStatistics Card */}
           <Card>
             <CardBody>
-              <Flex
-                flexDirection='row'
-                align='center'
-                justify='center'
-                w='100%'
-              >
-                <Stat me='auto'>
-                  <StatLabel
-                    fontSize='sm'
-                    color='gray.400'
-                    fontWeight='bold'
-                    pb='2px'
-                  >
-                    Left To Spend
-                  </StatLabel>
-                  <Flex>
-                    <StatNumber fontSize='lg' color='#fff' fontWeight='bold'>
-                      £{data.insights.leftToSpend}
-                    </StatNumber>
-                    <StatHelpText
-                      alignSelf='flex-end'
-                      justifySelf='flex-end'
-                      m='0px'
-                      color='green.400'
-                      fontWeight='bold'
-                      ps='3px'
-                      fontSize='md'
-                    >
-                      {data.insights.leftToSpendChange}
-                    </StatHelpText>
-                  </Flex>
-                </Stat>
-                <IconBox as='box' h={'45px'} w={'45px'} bg='brand.200'>
-                  <CartIcon h={'24px'} w={'24px'} color='#fff' />
-                </IconBox>
-              </Flex>
+              <StatsDisplay
+                label='Left To Spend'
+                value={`£${data.insights.leftToSpend}`}
+                change={data.insights.leftToSpendChange}
+                icon='cart'
+              />
             </CardBody>
           </Card>
         </SimpleGrid>
@@ -482,134 +311,34 @@ function Dashboard() {
                   </Text>
                 </Flex>
                 <SimpleGrid gap={{ sm: '12px' }} columns={4}>
-                  <Flex direction='column'>
-                    <Flex alignItems='center'>
-                      <IconBox
-                        as='box'
-                        h={'30px'}
-                        w={'30px'}
-                        bg='brand.200'
-                        me='6px'
-                      >
-                        <WalletIcon h={'15px'} w={'15px'} color='#fff' />
-                      </IconBox>
-                      <Text fontSize='sm' color='gray.400'>
-                        Shopping
-                      </Text>
-                    </Flex>
-                    <Text
-                      fontSize={{ sm: 'md', lg: 'lg' }}
-                      color='#fff'
-                      fontWeight='bold'
-                      mb='6px'
-                      my='6px'
-                    >
-                      £{data.insights.shoppingExpenditure}
-                    </Text>
-                    <Progress
-                      colorScheme='brand'
-                      bg='#2D2E5F'
-                      borderRadius='30px'
-                      h='5px'
-                      value={20}
-                    />
-                  </Flex>
-                  <Flex direction='column'>
-                    <Flex alignItems='center'>
-                      <IconBox
-                        as='box'
-                        h={'30px'}
-                        w={'30px'}
-                        bg='brand.200'
-                        me='6px'
-                      >
-                        <RocketIcon h={'15px'} w={'15px'} color='#fff' />
-                      </IconBox>
-                      <Text fontSize='sm' color='gray.400'>
-                        Groceries
-                      </Text>
-                    </Flex>
-                    <Text
-                      fontSize={{ sm: 'md', lg: 'lg' }}
-                      color='#fff'
-                      fontWeight='bold'
-                      mb='6px'
-                      my='6px'
-                    >
-                      £{data.insights.groceriesExpenditure}
-                    </Text>
-                    <Progress
-                      colorScheme='brand'
-                      bg='#2D2E5F'
-                      borderRadius='30px'
-                      h='5px'
-                      value={90}
-                    />
-                  </Flex>
-                  <Flex direction='column'>
-                    <Flex alignItems='center'>
-                      <IconBox
-                        as='box'
-                        h={'30px'}
-                        w={'30px'}
-                        bg='brand.200'
-                        me='6px'
-                      >
-                        <CartIcon h={'15px'} w={'15px'} color='#fff' />
-                      </IconBox>
-                      <Text fontSize='sm' color='gray.400'>
-                        Bills
-                      </Text>
-                    </Flex>
-                    <Text
-                      fontSize={{ sm: 'md', lg: 'lg' }}
-                      color='#fff'
-                      fontWeight='bold'
-                      mb='6px'
-                      my='6px'
-                    >
-                      £{data.insights.billsExpenditure}
-                    </Text>
-                    <Progress
-                      colorScheme='brand'
-                      bg='#2D2E5F'
-                      borderRadius='30px'
-                      h='5px'
-                      value={30}
-                    />
-                  </Flex>
-                  <Flex direction='column'>
-                    <Flex alignItems='center'>
-                      <IconBox
-                        as='box'
-                        h={'30px'}
-                        w={'30px'}
-                        bg='brand.200'
-                        me='6px'
-                      >
-                        <StatsIcon h={'15px'} w={'15px'} color='#fff' />
-                      </IconBox>
-                      <Text fontSize='sm' color='gray.400'>
-                        Misc
-                      </Text>
-                    </Flex>
-                    <Text
-                      fontSize={{ sm: 'md', lg: 'lg' }}
-                      color='#fff'
-                      fontWeight='bold'
-                      mb='6px'
-                      my='6px'
-                    >
-                      £{data.insights.miscExpenditure}
-                    </Text>
-                    <Progress
-                      colorScheme='brand'
-                      bg='#2D2E5F'
-                      borderRadius='30px'
-                      h='5px'
-                      value={50}
-                    />
-                  </Flex>
+                  <SpendInfo
+                    label="Shopping"
+                    value={`£${data.insights.shoppingExpenditure}`}
+                    progress={20}
+                    ariaLabel='Shopping Expenditure'
+                    icon="wallet"
+                   />
+                  <SpendInfo
+                    label="Groceries"
+                    value={`£${data.insights.groceriesExpenditure}`}
+                    progress={90}
+                    ariaLabel='Groceries Expenditure'
+                    icon="rocket"
+                   />
+                  <SpendInfo
+                    label="Bills"
+                    value={`£${data.insights.billsExpenditure}`}
+                    progress={30}
+                    ariaLabel='Bills Expenditure'
+                    icon="cart"
+                   />
+                  <SpendInfo
+                    label="Misc"
+                    value={`£${data.insights.miscExpenditure}`}
+                    progress={50}
+                    ariaLabel='Misc Expenditure'
+                    icon="stats"
+                   />
                 </SimpleGrid>
               </Flex>
             </CardBody>
@@ -634,5 +363,7 @@ function Dashboard() {
     </>
   );
 }
+
+reportAccessibility(React);
 
 export default Dashboard;

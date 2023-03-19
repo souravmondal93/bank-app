@@ -3,7 +3,8 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 import HomeLayout from '../../layouts/home';
-import Dashboard, { DASHBOARD_DATA } from '../../pages/home/dashboard.page';
+import Dashboard from '../../pages/home/dashboard.page';
+import { DASHBOARD_DATA } from '@/graphql/query/dashboard.query';
 import { MOCK_DASHBOARD_DATA } from '../../../__mock__/dashboard-data';
 
 describe('Dashboard Page', () => {

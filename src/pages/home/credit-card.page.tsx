@@ -1,5 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import Head from 'next/head';
+import { useQuery } from '@apollo/client';
 
 // Chakra imports
 import { Box, Button, Flex, Grid, Icon, Spacer, Text } from '@chakra-ui/react';
@@ -25,35 +26,19 @@ import HomeLayout from '@/layouts/home';
 import { partition, formatAmount, formatDateTimeString } from '@/common/helper';
 import CONSTANTS from '@/common/constants';
 
-export const CREDIT_CARD_DATA = gql`
-  query Query {
-    CreditCarTransactionsByCurrentUser {
-      _id
-      type
-      payeeName
-      date
-      amount
-      status
-      reference
-      sourceAccountId
-      senderId
-      recipientId
-    }
-    getMyCreditCardAccount {
-      _id
-      type
-      isActive
-      owner
-      sortCode
-      accountNumber
-      currency
-      balance
-    }
-  }
-`;
+import reportAccessibility from '@/utils/report-accessibility';
+
+import { CREDIT_CARD_DATA } from '@/graphql/query/credit-card.query';
 
 CreditCard.getLayout = function getLayout(page: ReactElement) {
-  return <HomeLayout>{page}</HomeLayout>;
+  return (
+    <HomeLayout>
+      <Head>
+        <title>Vision Bank - Credit Card</title>
+      </Head>
+      {page}
+    </HomeLayout>
+  );
 };
 
 function CreditCard() {
@@ -274,8 +259,7 @@ function CreditCard() {
                   <Flex direction='column'>
                     <Button
                       bg='transparent'
-                      // _hover='none'
-                      // _active='none'
+                      aria-label="More Actions"
                       alignSelf='flex-end'
                       p='0px'
                     >
@@ -326,5 +310,7 @@ function CreditCard() {
     </Flex>
   );
 }
+
+reportAccessibility(React);
 
 export default CreditCard;

@@ -1,4 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
+import Head from 'next/head';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
+import NextLink from 'next/link';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 // Chakra imports
 import {
   Flex,
@@ -6,53 +13,57 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
   Link,
   Switch,
   Text,
   DarkMode,
-  FormErrorMessage
 } from '@chakra-ui/react';
-import { useForm, Controller } from 'react-hook-form';
-import { gql, useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
-
 
 import { httpLink, setAuthToken } from '../../../apollo-client';
 
-export const LOGIN_USER = gql`
-  mutation Mutation($loginUserInput: LoginUserInput!) {
-    loginUser(loginUserInput: $loginUserInput) {
-      access_token
-    }
-  }
-`;
-
 // Layout
-import AuthLayout from '../../layouts/auth';
+import AuthLayout from '@/layouts/auth';
 
 // Custom Components
-import GradientBorder from '../../components/atoms/gradient-border/gradient-border';
+import InputController from '@/components/molecules/input-controller/input-controller';
+
+import reportAccessibility from '@/utils/report-accessibility';
+import { LOGIN_USER } from '@/graphql/mutation/login.mutation';
+import { LOGIN_SCHEMA } from '@/common/login-form.schema';
+
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>;
+  return (
+    <AuthLayout>
+      <Head>
+        <title>Vision Bank - Login Page</title>
+      </Head>
+      {page}
+    </AuthLayout>
+  );
 };
 
 function Login() {
   const router = useRouter();
-  const titleColor = 'white';
-  const textColor = 'gray.400';
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
+    resolver: yupResolver(LOGIN_SCHEMA),
   });
-  const [loginUser, { data, loading, error, client }] = useMutation(LOGIN_USER, {
-    errorPolicy: 'all',
-  });
+  const [loginUser, { data, loading, error, client }] = useMutation(
+    LOGIN_USER,
+    {
+      errorPolicy: 'all',
+    }
+  );
 
   const onSubmit = (formData: any) => {
     loginUser({
@@ -67,10 +78,16 @@ function Login() {
 
   useEffect(() => {
     if (data?.loginUser?.access_token) {
-      client.setLink(setAuthToken(data.loginUser.access_token).concat(httpLink));
+      client.setLink(
+        setAuthToken(data.loginUser.access_token).concat(httpLink)
+      );
       router.push('/home/dashboard');
     }
   }, [data, router, client]);
+
+  useEffect(() => {
+    console.log('Login Errors: ', errors);
+  }, [errors]);
 
   if (loading) return <h1>Loading ...</h1>;
 
@@ -94,94 +111,38 @@ function Login() {
           mt={{ base: '50px', md: '150px', lg: '160px', xl: '245px' }}
           mb={{ base: '60px', lg: '95px' }}
         >
-          <Heading color={titleColor} fontSize='32px' mb='10px'>
+          <Heading color="white" fontSize='32px' mb='10px'>
             Welcome! <br />
             Nice to see you!
           </Heading>
           <Text
             mb='36px'
             ms='4px'
-            color={textColor}
+            color='gray.400'
             fontWeight='bold'
             fontSize='14px'
           >
             Enter your email and password to sign in
           </Text>
-          <Controller
-            name='email'
-            rules={{ required: "Email is required" }}
+          <InputController
             control={control}
-            render={({ field }) => (
-              <FormControl isInvalid={Boolean(errors.email)}>
-                <FormLabel
-                  ms='4px'
-                  fontSize='sm'
-                  fontWeight='normal'
-                  color='white'
-                >
-                  Email
-                </FormLabel>
-                <GradientBorder
-                  mb='24px'
-                  w={{ base: '100%', lg: 'fit-content' }}
-                  borderRadius='20px'
-                >
-                  <Input
-                    color='white'
-                    bg='rgb(19,21,54)'
-                    border='transparent'
-                    borderRadius='20px'
-                    fontSize='sm'
-                    size='lg'
-                    w={{ base: '100%', md: '346px' }}
-                    maxW='100%'
-                    h='46px'
-                    placeholder='Your email adress'
-                    {...field}
-                  />
-                  
-                </GradientBorder>
-                {errors.email && <FormErrorMessage mt='0px' mb='20px'>Email is required</FormErrorMessage>}
-              </FormControl>
-            )}
-          />
-          <Controller
-            name='password'
-            rules={{ required: "Password is required" }}
+            errors={errors}
+            errorText="Email is required"
+            label="Email"
+            fieldName="email"
+            placeholder='Your email adress'
+            dataTestId="email-input"
+           />
+          <InputController
             control={control}
-            render={({ field }) => (
-              <FormControl isInvalid={Boolean(errors.password)}>
-                <FormLabel
-                  ms='4px'
-                  fontSize='sm'
-                  fontWeight='normal'
-                  color='white'
-                >
-                  Password
-                </FormLabel>
-                <GradientBorder
-                  mb='24px'
-                  w={{ base: '100%', lg: 'fit-content' }}
-                  borderRadius='20px'
-                >
-                  <Input
-                    color='white'
-                    bg='rgb(19,21,54)'
-                    border='transparent'
-                    borderRadius='20px'
-                    fontSize='sm'
-                    size='lg'
-                    w={{ base: '100%', md: '346px' }}
-                    maxW='100%'
-                    type='password'
-                    placeholder='Your password'
-                    {...field}
-                  />
-                </GradientBorder>
-                {errors.password && <FormErrorMessage mt='0px' mb='20px'>Password is required</FormErrorMessage>}
-              </FormControl>
-            )}
-          />
+            errors={errors}
+            errorText="Password is required"
+            label="Password"
+            fieldName="password"
+            placeholder='Your password'
+            type="password"
+            dataTestId="password-input"
+           />
           <FormControl display='flex' alignItems='center'>
             <DarkMode>
               <Switch id='remember-login' colorScheme='brand' me='10px' />
@@ -197,7 +158,7 @@ function Login() {
             </FormLabel>
           </FormControl>
           {error ? (
-            <Text fontSize='md' color='red.500' fontWeight='bold' mt="15px">
+            <Text fontSize='md' color='red.500' fontWeight='bold' mt='15px'>
               {error.message}
             </Text>
           ) : null}
@@ -212,7 +173,7 @@ function Login() {
             mt='20px'
             isLoading={loading}
             loadingText='Signing In ...'
-            data-testid="sign-in-submit"
+            data-testid='sign-in-submit'
           >
             SIGN IN
           </Button>
@@ -224,9 +185,15 @@ function Login() {
             maxW='100%'
             mt='0px'
           >
-            <Text color={textColor} fontWeight='medium'>
+            <Text color='gray.400' fontWeight='medium'>
               Don&apos;t have an account?
-              <Link as={NextLink} color={titleColor} href='/auth/register' ms='5px' fontWeight='bold'>
+              <Link
+                as={NextLink}
+                color="white"
+                href='/auth/register'
+                ms='5px'
+                fontWeight='bold'
+              >
                 Sign Up
               </Link>
             </Text>
@@ -236,5 +203,7 @@ function Login() {
     </Flex>
   );
 }
+
+// reportAccessibility(React);
 
 export default Login;

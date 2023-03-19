@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
+import Head from 'next/head';
 import NextLink from 'next/link';
 // Chakra imports
 import {
@@ -6,86 +7,41 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
   Link,
   Switch,
   Text,
   DarkMode,
-  FormErrorMessage,
   useDisclosure,
 } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 // Layout
 import AuthLayout from '@/layouts/auth';
 // Custom Components
 import GradientBorder from '@/components/atoms/gradient-border/gradient-border';
 import Modal from '@/components/molecules/modal/modal';
+import InputController from '@/components/molecules/input-controller/input-controller';
+
+import reportAccessibility from '@/utils/report-accessibility';
+import { REGISTER_USER } from '@/graphql/mutation/register.mutation';
+import CONSTANTS from '@/common/constants';
+import { REGISTER_SCHEMA } from '@/common/register-form.schema';
 
 Register.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>;
+  return (
+    <AuthLayout>
+      <Head>
+        <title>Vision Bank - Register Page</title>
+      </Head>
+      {page}
+    </AuthLayout>
+  );
 };
-
-export const REGISTER_USER = gql`
-  mutation Mutation($createUserInput: CreateUserInput!) {
-    createUser(createUserInput: $createUserInput) {
-      _id
-      firstName
-      lastName
-      email
-      address
-      occupation
-      income
-      pan
-      phone
-      newUser
-    }
-  }
-`;
-
-const DEFAULT_FORM_VALUES = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  address: '',
-  phone: '',
-  occupation: '',
-  income: 0,
-  pan: '',
-  password: '',
-  confirmPassword: '',
-};
-
-const schema = yup
-  .object({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    email: yup.string().required().email(),
-    address: yup.string().required(),
-    phone: yup.string().required(),
-    occupation: yup.string().required(),
-    income: yup.number().required().positive(),
-    pan: yup.string().required(),
-    password: yup
-      .string()
-      .required('Required')
-      .min(8, 'Must be 8 characters or more')
-      .matches(/[a-z]+/, 'One lowercase character')
-      .matches(/[A-Z]+/, 'One uppercase character')
-      .matches(/[@$!%*#?&]+/, 'One special character')
-      .matches(/\d+/, 'One number'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Passwords must match'),
-  })
-  .required();
 
 function Register() {
-  const titleColor = 'white';
-  const textColor = 'gray.400';
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
@@ -94,8 +50,8 @@ function Register() {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: DEFAULT_FORM_VALUES,
-    resolver: yupResolver(schema),
+    defaultValues: CONSTANTS.DEFAULT_FORM_VALUES,
+    resolver: yupResolver(REGISTER_SCHEMA),
   });
   const [registerUser, { data, loading, error, client }] = useMutation(
     REGISTER_USER,
@@ -191,7 +147,7 @@ function Register() {
           >
             <Text
               fontSize='xl'
-              color={textColor}
+              color='gray.400'
               fontWeight='bold'
               textAlign='center'
               mb='22px'
@@ -200,458 +156,102 @@ function Register() {
             </Text>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Flex direction='column' overflowY='scroll' height='400px'>
-                <Controller
-                  name='firstName'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.firstName)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        First Name
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='text'
-                          placeholder='First name'
-                          {...field}
-                          data-testid="first-name-input"
-                        />
-                      </GradientBorder>
-                      {errors.firstName && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          First Name is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="First Name is required"
+                  label="First Name"
+                  fieldName="firstName"
+                  placeholder='First name'
+                  dataTestId="first-name-input"
                 />
-                <Controller
-                  name='lastName'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.lastName)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Last Name
-                      </FormLabel>
-
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='text'
-                          placeholder='Last name'
-                          {...field}
-                          data-testid="last-name-input"
-                        />
-                      </GradientBorder>
-                      {errors.lastName && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Last Name is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Last Name is required"
+                  label="Last Name"
+                  fieldName="lastName"
+                  placeholder='Last name'
+                  dataTestId="last-name-input"
                 />
-                <Controller
-                  name='email'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.email)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Email
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='email'
-                          placeholder='Your email address'
-                          {...field}
-                          data-testid="email-input"
-                        />
-                      </GradientBorder>
-                      {errors.email && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Email is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Email is required"
+                  label="Email"
+                  fieldName="email"
+                  placeholder='Email'
+                  dataTestId="email-input"
+                  type='email'
                 />
-                <Controller
-                  name='address'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.address)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Address
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='text'
-                          placeholder='Residential Address'
-                          {...field}
-                          data-testid="address-input"
-                        />
-                      </GradientBorder>
-                      {errors.address && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Valid Address is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Valid Address is required"
+                  label="Address"
+                  fieldName="address"
+                  placeholder='Residential Address'
+                  dataTestId="address-input"
                 />
-                <Controller
-                  name='phone'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.phone)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Phone
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='tel'
-                          placeholder='Contact Number'
-                          {...field}
-                          data-testid="contact-number-input"
-                        />
-                      </GradientBorder>
-                      {errors.phone && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Phone is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Phone is required"
+                  label="Phone"
+                  fieldName="phone"
+                  placeholder='Contact Number'
+                  dataTestId="contact-number-input"
+                  type='tel'
                 />
-                <Controller
-                  name='occupation'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.occupation)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Occupation
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='text'
-                          placeholder='Occupation'
-                          {...field}
-                          data-testid="occupation-input"
-                        />
-                      </GradientBorder>
-                      {errors.occupation && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Occupation is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Occupation is required"
+                  label="Occupation"
+                  fieldName="occupation"
+                  placeholder='Occupation'
+                  dataTestId="occupation-input"
                 />
-                <Controller
-                  name='income'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.income)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Income
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='number'
-                          placeholder='Yearly Income'
-                          {...field}
-                          data-testid="income-input"
-                        />
-                      </GradientBorder>
-                      {errors.income && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Yearly Income is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Yearly Income is required"
+                  label="Income"
+                  fieldName="income"
+                  placeholder='Yearly Income'
+                  dataTestId="income-input"
+                  type='number'
                 />
-                <Controller
-                  name='pan'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.pan)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        PAN Details
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='text'
-                          placeholder='PAN'
-                          {...field}
-                          data-testid="pan-input"
-                        />
-                      </GradientBorder>
-                      {errors.pan && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          PAN Details is required
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="PAN Details is required"
+                  label="PAN Details"
+                  fieldName="pan"
+                  placeholder='PAN'
+                  dataTestId="pan-input"
                 />
-                <Controller
-                  name='password'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.password)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Password
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='password'
-                          placeholder='Your password'
-                          {...field}
-                          data-testid="password-input"
-                        />
-                      </GradientBorder>
-                      {errors.password && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Password should be at least 8 characters long, must
-                          include one lowercase, one uppercase, one digit and
-                          one special character (@$!%*#?&)
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Password should be at least 8 characters long, must
+                    include one lowercase, one uppercase, one digit and
+                    one special character (@$!%*#?&)"
+                  label="Password"
+                  fieldName="password"
+                  placeholder='Your password'
+                  dataTestId="password-input"
+                  type='password'
                 />
-                <Controller
-                  name='confirmPassword'
+                <InputController
                   control={control}
-                  render={({ field }) => (
-                    <FormControl isInvalid={Boolean(errors.confirmPassword)}>
-                      <FormLabel
-                        color={titleColor}
-                        ms='4px'
-                        fontSize='sm'
-                        fontWeight='normal'
-                      >
-                        Confirm Password
-                      </FormLabel>
-                      <GradientBorder
-                        mb='24px'
-                        h='50px'
-                        w={{ base: '100%', lg: 'fit-content' }}
-                        borderRadius='20px'
-                      >
-                        <Input
-                          color={titleColor}
-                          bg={{
-                            base: 'rgb(19,21,54)',
-                          }}
-                          border='transparent'
-                          borderRadius='20px'
-                          fontSize='sm'
-                          size='lg'
-                          w={{ base: '100%', md: '346px' }}
-                          maxW='100%'
-                          h='46px'
-                          type='password'
-                          placeholder='Confirm your password'
-                          {...field}
-                          data-testid="confirm-password-input"
-                        />
-                      </GradientBorder>
-                      {errors.confirmPassword && (
-                        <FormErrorMessage mt='0px' mb='20px'>
-                          Entered Passwords doesn&apos;t match
-                        </FormErrorMessage>
-                      )}
-                    </FormControl>
-                  )}
+                  errors={errors}
+                  errorText="Entered Passwords doesn&apos;t match"
+                  label="Confirm Password"
+                  fieldName="confirmPassword"
+                  placeholder='Confirm your password'
+                  dataTestId="confirm-password-input"
+                  type='password'
                 />
                 <FormControl>
                   <FormControl display='flex' alignItems='center' mb='24px'>
@@ -664,7 +264,7 @@ function Register() {
                     </DarkMode>
 
                     <FormLabel
-                      color={titleColor}
+                      color="white"
                       htmlFor='remember-login'
                       mb='0'
                       fontWeight='normal'
@@ -693,11 +293,11 @@ function Register() {
                   maxW='100%'
                   mt='0px'
                 >
-                  <Text color={textColor} fontWeight='medium'>
+                  <Text color='gray.400' fontWeight='medium'>
                     Already have an account?
                     <Link
                       as={NextLink}
-                      color={titleColor}
+                      color="white"
                       ms='5px'
                       href='/auth/login'
                       fontWeight='bold'
@@ -737,5 +337,7 @@ function Register() {
     </>
   );
 }
+
+reportAccessibility(React);
 
 export default Register;

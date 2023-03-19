@@ -22,6 +22,8 @@
       "@/assets/*": ["./src/assets/*"],
       "@/variables/*": ["./src/variables/*"],
       "@/common/*": ["./src/common/*"],
+      "@/graphql/*": ["./src/graphql/*"],
+      "@/utils/*": ["./src/utils/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/layouts/auth.tsx"],
