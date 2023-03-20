@@ -50,7 +50,7 @@ const StatsDisplay = (props: StatsDisplayProps) => {
         </StatLabel>
         {/* <Flex> */}
         <StatNumber fontSize='lg' color='#fff'>
-          £{value}
+          {value}
         </StatNumber>
         <StatHelpText
           alignSelf='flex-end'

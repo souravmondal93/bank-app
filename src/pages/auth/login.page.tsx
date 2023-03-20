@@ -1,10 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
 import Head from 'next/head';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useApolloClient } from '@apollo/client';
 
 // Chakra imports
 import {
@@ -45,6 +46,7 @@ Login.getLayout = function getLayout(page: ReactElement) {
 
 function Login() {
   const router = useRouter();
+  const client = useApolloClient();
 
   const {
     control,
@@ -58,7 +60,7 @@ function Login() {
     },
     resolver: yupResolver(LOGIN_SCHEMA),
   });
-  const [loginUser, { data, loading, error, client }] = useMutation(
+  const [loginUser, { data, loading, error }] = useMutation(
     LOGIN_USER,
     {
       errorPolicy: 'all',
@@ -87,7 +89,11 @@ function Login() {
 
   useEffect(() => {
     console.log('Login Errors: ', errors);
-  }, [errors]);
+    client.setLink(setAuthToken('').concat(httpLink));
+    client.clearStore().then(() => {
+      client.resetStore();
+    });
+  }, [errors, client]);
 
   if (loading) return <h1>Loading ...</h1>;
 

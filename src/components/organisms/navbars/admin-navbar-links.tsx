@@ -1,5 +1,3 @@
-// Chakra Icons
-import { BellIcon } from '@chakra-ui/icons';
 // Chakra Imports
 import {
   Button,
@@ -10,25 +8,23 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import NextLink from 'next/link';
 import routes from '../../../routes';
+import { useApolloClient } from '@apollo/client';
+
+// Chakra Icons
+import { BellIcon } from '@chakra-ui/icons';
 
 // Custom Icons
 import { ProfileIcon } from '@/components/atoms/icons/all-icons';
+
 // Custom Components
 import { SidebarResponsive } from '@/components/molecules/sidebar/sidebar-responsive';
 import { httpLink, setAuthToken } from '../../../../apollo-client';
-
-const LOGIN_USER = gql`
-  mutation Mutation($loginUserInput: LoginUserInput!) {
-    loginUser(loginUserInput: $loginUserInput) {
-      access_token
-    }
-  }
-`;
+import { LOGIN_USER } from '@/graphql/mutation/login.mutation';
 
 type AdminNavbarLinksProps = {
    variant?: string;
@@ -40,9 +36,10 @@ type AdminNavbarLinksProps = {
 
 export default function AdminNavbarLinks(props: AdminNavbarLinksProps) {
   const router = useRouter();
+  const client = useApolloClient();
   const { variant, secondary, ...rest } = props;
 
-  const [loginUser, { client }] = useMutation(LOGIN_USER, {
+  const [loginUser] = useMutation(LOGIN_USER, {
     errorPolicy: 'all',
   });
 

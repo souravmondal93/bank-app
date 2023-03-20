@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import Head from 'next/head';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, useApolloClient } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 // Chakra imports
 import {
@@ -35,6 +36,7 @@ import SpendInfo from '@/components/molecules/spend-info/spend-info';
 import reportAccessibility from '@/utils/report-accessibility';
 import { DASHBOARD_DATA } from '@/graphql/query/dashboard.query';
 import { UPDATE_NEW_USER } from '@/graphql/mutation/dashboard.mutation';
+import { httpLink, setAuthToken } from '../../../apollo-client';
 
 interface UpdateNewUserData {
   updateNewUser: {
@@ -60,7 +62,10 @@ Dashboard.getLayout = function getLayout(page: ReactElement) {
 };
 
 function Dashboard() {
+  const router = useRouter();
+  const client = useApolloClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { data, loading, error } = useQuery(DASHBOARD_DATA);
   const [newUser, { data: newUserData }] = useMutation<
     UpdateNewUserData,
@@ -75,6 +80,15 @@ function Dashboard() {
       onOpen();
     }
   }, [data, newUser, onOpen]);
+
+  useEffect(() => {
+    console.error('Dashboard Data Error: ', error);
+    if (error?.toString().includes('Unauthorized')) {
+      console.log('401')
+      client.setLink(setAuthToken('').concat(httpLink));
+      router.push('/auth/login');
+    }
+  }, [error, client, router]);
 
   const getYearlyDataForLineChart = ({
     savingsAccountByMonth,
