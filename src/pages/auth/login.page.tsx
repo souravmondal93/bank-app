@@ -89,11 +89,14 @@ function Login() {
 
   useEffect(() => {
     console.log('Login Errors: ', errors);
-    client.setLink(setAuthToken('').concat(httpLink));
-    client.clearStore().then(() => {
-      client.resetStore();
-    });
-  }, [errors, client]);
+    if (process.env.NODE_ENV !== 'test' && Object.keys(errors).length === 0) {
+      client.setLink(setAuthToken('').concat(httpLink));
+      client.clearStore().then(() => {
+        client.resetStore();
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) return <h1>Loading ...</h1>;
 
